@@ -1,15 +1,17 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-	<!ENTITY name      "controller-driver">
-	<!ENTITY author    "Trozmagon">
-	<!ENTITY version   "2024.06.27">
-	<!ENTITY pluginURL "https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
+	<!ENTITY name		"controller-driver">
+	<!ENTITY author		"Trozmagon">
+	<!ENTITY version	"2024.06.27">
+	<!ENTITY launch		"include/index">
+	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
 ]>
 
 <PLUGIN  name="&name;"
          author="&author;"
          version="&version;"
+		 launch="&launch;"
          pluginURL="&pluginURL;"
 		 icon="&name;.png">
 
