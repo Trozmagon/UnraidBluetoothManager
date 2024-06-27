@@ -13,7 +13,7 @@
          version="&version;"
 		 launch="&launch;"
          pluginURL="&pluginURL;"
-		 icon="&name;.png">
+		 icon="gamepad">
 
 	<CHANGES>
 
@@ -30,13 +30,9 @@
 	<FILE Name="/boot/config/plugins/&name;/include/index.page">
 		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
 	</FILE>
-	
-	<FILE Name="/boot/config/plugins/&name;/&name;.png">
-		<URL>https://github.com/Trozmagon/controller-driver/blob/main/&name;.png</URL>
-	</FILE>
 
-	<FILE Name="/usr/local/emhttp/plugins/&name;/&name;.png">
-		<LOCAL>/boot/config/plugins/&name;/&name;.png</LOCAL>
+	<FILE Name="/usr/local/emhttp/plugins/&name;/include/index.page">
+		<LOCAL>/boot/config/plugins/&name;/include/index.page</LOCAL>
 	</FILE>
 	
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
@@ -45,23 +41,6 @@
 			
 			Blah Blah Blah
 			Bloop Bloop Bloop
-		</INLINE>
-	</FILE>
-
-
-	<FILE Name="/usr/local/emhttp/plugins/&name;/Apcupsd.page">
-		<INLINE>
-			<![CDATA[
-				Menu="OtherSettings"
-				Icon="apcupsd.png"
-				Version="2024.10.27"
-				Author="Trozmagon"
-				Title="APC UPS"
-				---
-				<?php
-				   php goes here.
-				?>
-				]]>
 		</INLINE>
 	</FILE>
 
