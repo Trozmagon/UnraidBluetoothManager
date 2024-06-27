@@ -20,12 +20,12 @@
 	</CHANGES>
 
 
-	<FILE Name="/boot/config/plugins/&name;/packages/null.tar" Run="upgradepkg --install-new">
+	<FILE Name="/boot/config/plugins/&name;/packages/null.tar">
 		<URL>https://github.com/Trozmagon/controller-driver/raw/main/packages/null.tar</URL>
 	</FILE>
 
 	<FILE Name="/boot/config/plugins/&name;/&name;.png">
-		<URL>https://github.com/Trozmagon/controller-driver/blob/main/controller-driver.png</URL>
+		<URL>https://github.com/Trozmagon/controller-driver/blob/main/&name;.png</URL>
 	</FILE>
 
 	<FILE Name="/usr/local/emhttp/plugins/&name;/&name;.png">
@@ -35,6 +35,23 @@
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 		<INLINE>
 			**controller-driver**
+		</INLINE>
+	</FILE>
+
+
+	<FILE Name="/usr/local/emhttp/plugins/&name;/Apcupsd.page">
+		<INLINE>
+			<![CDATA[
+				Menu="OtherSettings"
+				Icon="apcupsd.png"
+				Version="2024.10.27"
+				Author="Trozmagon"
+				Title="APC UPS"
+				---
+				<?php
+				   php goes here.
+				?>
+				]]>
 		</INLINE>
 	</FILE>
 
