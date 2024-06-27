@@ -58,4 +58,12 @@
 		</INLINE>
 	</FILE>
 
+	<!-- Uninstall Script -->
+	<FILE Run="/bin/bash" Method="remove">
+		<INLINE>
+			rm -r /usr/local/emhttp/plugins/&name;
+			rm -r /boot/config/plugins/&name;
+		</INLINE>
+	</FILE>
+	<!-- Uninstall Script -->
 </PLUGIN>
