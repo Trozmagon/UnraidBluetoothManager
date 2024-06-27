@@ -4,7 +4,7 @@
 	<!ENTITY name      "controller-driver">
 	<!ENTITY author    "trozmagon">
 	<!ENTITY version   "2024.06.27">
-	<!ENTITY pluginURL "https://github.com/trozmagon/controller-driver">
+	<!ENTITY pluginURL "https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
 ]>
 
 <PLUGIN  name="&name;"
