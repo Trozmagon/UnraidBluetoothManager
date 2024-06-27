@@ -27,6 +27,10 @@
 	<FILE Name="/boot/config/plugins/&name;/&name;.png">
 		<URL>https://github.com/Trozmagon/controller-driver/blob/main/controller-driver.png</URL>
 	</FILE>
+
+	<FILE Name="/usr/local/emhttp/plugins/&name;/&name;.png">
+		<LOCAL>/boot/config/plugins/&name;/&name;.png</LOCAL>
+	</FILE>
 	
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 		<INLINE>
