@@ -4,7 +4,7 @@
 	<!ENTITY name		"controller-driver">
 	<!ENTITY author		"Trozmagon">
 	<!ENTITY version	"2024.06.27">
-	<!ENTITY launch		"connection">
+	<!ENTITY launch		"Settings/Index">
 	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
 ]>
 
@@ -21,52 +21,36 @@
 		- Initial release
 
 	</CHANGES>
-
-
-	<FILE Name="/boot/config/plugins/&name;/packages/null.tar">
-		<URL>https://github.com/Trozmagon/controller-driver/raw/main/packages/null.tar</URL>
-	</FILE>
-
-	<!--<FILE Name="/boot/config/plugins/&name;/include/index.page">
-		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
-	</FILE>
-
-	<FILE Name="/usr/local/emhttp/plugins/&name;/include/index.page">
-		<LOCAL>/boot/config/plugins/&name;/include/index.page</LOCAL>
-	</FILE>-->
 	
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 		<INLINE>
 			**Controller Driver**
-			
+
 			Blah Blah Blah
 			Bloop Bloop Bloop
 		</INLINE>
 	</FILE>
 
-	<!-- Page file -->
-	<FILE Name="/usr/local/emhttp/plugins/&name;/connection.page">
-		<INLINE>
-			<![CDATA[
-				Menu="Connection"
-				Icon="connection.png"
-				Version="2024.06.27"
-				Author="Trozmagon"
-				Title="Connection"
-				---
-				<?php
-				   Build controller connection page here including bluetooth
-				?>
-			]]>
-		</INLINE>
+	
+
+	<FILE Name="/boot/config/plugins/&name;/include/Index.page">
+		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/Index.page</URL>
 	</FILE>
+
+	<FILE Name="/usr/local/emhttp/plugins/&name;/Index.page">
+		<LOCAL>/boot/config/plugins/&name;/include/Index.page</LOCAL>
+	</FILE>
+	
+	
 	
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
 		<INLINE>
 			cd /usr/local/emhttp/plugins/&name;/
+
+			echo "cloning xpadneo"
 			git clone https://github.com/atar-axis/xpadneo.git
-			
+
 
 			<!-- cd xpadneo -->
 			<!-- sudo ./install.sh -->
