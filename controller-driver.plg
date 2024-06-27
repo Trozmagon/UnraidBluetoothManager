@@ -35,6 +35,9 @@
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 		<INLINE>
 			**controller-driver**
+			
+			Blah Blah Blah
+			Bloop Bloop Bloop
 		</INLINE>
 	</FILE>
 
