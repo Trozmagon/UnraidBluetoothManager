@@ -24,10 +24,10 @@
 	
 	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 		<INLINE>
-			**Controller Driver**
+			Unraid Nvidia Driver plugin
+			This is the repository for the Unraid Nvidia Driver plugin.
 
-			Blah Blah Blah
-			Bloop Bloop Bloop
+			Support Thread: https://forums.unraid.net/topic/98978-plugin-nvidia-driver/
 		</INLINE>
 	</FILE>
 
