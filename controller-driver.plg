@@ -1,0 +1,30 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+	<!ENTITY name      "controller-driver">
+	<!ENTITY author    "trozmagon">
+	<!ENTITY version   "2024.06.27">
+	<!ENTITY pluginURL "https://github.com/trozmagon/controller-driver">
+]>
+
+<PLUGIN  name="&name;"
+         author="&author;"
+         version="&version;"
+         pluginURL="&pluginURL;">
+
+	<CHANGES>
+
+		###2024.06.27
+		- Initial release
+
+	</CHANGES>
+
+
+
+	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
+		<INLINE>
+			**controller-driver**
+		</INLINE>
+	</FILE>
+
+</PLUGIN>
