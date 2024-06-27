@@ -10,7 +10,8 @@
 <PLUGIN  name="&name;"
          author="&author;"
          version="&version;"
-         pluginURL="&pluginURL;">
+         pluginURL="&pluginURL;"
+		 icon="&name;.png">
 
 	<CHANGES>
 
@@ -61,8 +62,13 @@
 	<!-- Uninstall Script -->
 	<FILE Run="/bin/bash" Method="remove">
 		<INLINE>
+			echo "Removing &name; files"
 			rm -r /usr/local/emhttp/plugins/&name;
 			rm -r /boot/config/plugins/&name;
+
+			echo "-----------------------------------------------------------"
+			echo "&name; has been uninstalled"
+			echo "-----------------------------------------------------------"
 		</INLINE>
 	</FILE>
 	<!-- Uninstall Script -->

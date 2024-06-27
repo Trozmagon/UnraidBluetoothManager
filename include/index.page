@@ -1,0 +1,46 @@
+Menu="TipsAndTweaks:1"
+Title="Tips"
+---
+<?PHP
+/* Copyright 2016-2024, Dan Landon.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ */
+$plugin			= "tips.and.tweaks";
+$docroot		= $docroot ?? $_SERVER['DOCUMENT_ROOT'] ?: '/usr/local/emhttp';
+$translations	= file_exists("$docroot/webGui/include/Translations.php");
+require_once "$docroot/plugins/$plugin/include/Legacy.php";
+?>
+<?if (! $translations):?>
+<?eval('?>'.parse_file("$docroot/plugins/$plugin/Tips.page"))?>
+<?else:?>
+
+<table class="tablesorter shift ups">
+<thead><tr><th>_(Tips)_</th></tr></thead>
+</table>
+
+<div style="width: 90%; float:left">
+	<p>_(The Tips below are suggestions, workarounds for known problems, and potential fixes)_.  _(It is recommended that you update Unraid to the latest stable version to get the latest features, bug fixes, and security updates)_.  _(Support for older versions of Unraid is being phased out)_.  _(Many plugins are no longer compatible with older Unraid versons)_.</p>
+	<li>_(Install the 'Fix Common Problems' plugin and resolve any Unraid configuration problems)_.</il>
+	<li>_(Use the 'Update Assistant' that is part of the Fix Common Problems plugin)_.  _(This will identify potential problems to be solved before you upgrade the Unraid OS)_.</li>
+	<li>_(Some have reported faster and more consistent network performance by making changes in networking parameters on the 'Tweaks' tab of this plugin)_.</li>
+	<li>_(If you have an Intel Processor, it may appear that all CPUs are constantly running at full speed)_.  _(They may show full speed, but the scaling governor is working properly)_.  _(It is recommended to use the pstate driver on Intel processors if you want the most performance)_.  _(Note)_: _(The dashboard shows CPU loading and not CPU frequency)_.  _(You can check CPU frequencies on the command line with)_ 'watch grep \"cpu MHz\" /proc/cpuinfo'.</li>
+	<li>_(If you set the 'Power Save' CPU Governor, you may see your processors stuck at 800 MHz)_.  _(It is recommended you use the 'Performance' Governor for best performance and power savings)_.
+	<li>_(If you configure VLANs on Unraid, you should make Unraid the Master Browser)_.  _(If you don't Unraid may not detect the Master Browser for all network interfaces correctly)_.</li>
+	<li>_(Some people are reporting OOM (out of memory) errors)_.  _(This seems to be occurring more now because of the large amounts of memory being installed in Unraid and the default Disk Cache settings too high)_.  _(If you are experiencing OOM errors, try adjusting the Disk Cache settings on the Tweaks page)_.</li>
+	<p>_(There is a very cool feature in Unraid 6 and up that can be used to capture your logs and help in troubleshooting a situation where your server locks up or becomes unresponsive)_.  _(Go to Settings->Syslog Server and enable the Syslog Server)_.  _(Put the IP address of your server in the 'Remote syslog server' field)_.  _(This will log all your server log enries to the Syslog Server and save the log to an array share)_.  _(After a reboot from a lockup or hung server, you can view the saved log using the Syslog viewer)_.</p>
+</div>
+<?endif;?>
+
+<script>
+	$(function() {
+		if ( typeof caPluginUpdateCheck === "function" ) {
+			caPluginUpdateCheck("tips.and.tweaks.plg");
+		}
+	});
+</script>
