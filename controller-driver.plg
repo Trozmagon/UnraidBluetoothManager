@@ -6,6 +6,7 @@
 	<!ENTITY version	"2024.06.27">
 	<!ENTITY launch		"Settings/Index">
 	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
+	<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
 <PLUGIN  name="&name;"
@@ -22,31 +23,26 @@
 
 	</CHANGES>
 	
-	<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
+	<FILE Name="&emhttp;/README.md">
 		<INLINE>
-			Unraid Nvidia Driver plugin
-			This is the repository for the Unraid Nvidia Driver plugin.
+			**Nvidia Driver**
 
-			Support Thread: https://forums.unraid.net/topic/98978-plugin-nvidia-driver/
+			This plugin will install the Nvidia drivers to utilize your Nvidia graphics card in your Docker container(s).
+			This plugin satisfies installation prerequisites of the GPU Statistics plugin from Community Apps. With both plugins installed you can display Nvidia GPU utilization on the unRAID Dashboard.
 		</INLINE>
 	</FILE>
 
 	
 
-	<FILE Name="/boot/config/plugins/&name;/include/Index.page">
+	<FILE Name="&emhttp;/Index.page">
 		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/Index.page</URL>
 	</FILE>
-
-	<FILE Name="/usr/local/emhttp/plugins/&name;/Index.page">
-		<LOCAL>/boot/config/plugins/&name;/include/Index.page</LOCAL>
-	</FILE>
-	
 	
 	
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
 		<INLINE>
-			cd /usr/local/emhttp/plugins/&name;/
+			cd &emhttp;
 
 			echo "cloning xpadneo"
 			git clone https://github.com/atar-axis/xpadneo.git
