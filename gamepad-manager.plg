@@ -1,15 +1,16 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-	<!ENTITY name		"controller-driver">
+	<!ENTITY name		"gamepad-manager">
 	<!ENTITY author		"Trozmagon">
 	<!ENTITY version	"2024.06.27">
 	<!ENTITY launch		"Settings/Index">
-	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
+	<!ENTITY pluginURL	"https://raw.githubusercontent.com/&author;/&name;/main/&name;.plg">
 	<!ENTITY emhttp		"/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN	name="&name;"
+<PLUGIN	
+		name="&name;"
 		author="&author;"
 		version="&version;"
 		launch="&launch;"
@@ -24,11 +25,11 @@
 	</CHANGES>
 
 	<FILE Name="&emhttp;/README.md">
-		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/README.md</URL>
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/README.md</URL>
 	</FILE>
 
 	<FILE Name="&emhttp;/Index.page">
-		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/Index.page</URL>
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/include/Index.page</URL>
 	</FILE>
 
 
