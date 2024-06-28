@@ -1,7 +1,16 @@
-Menu="Utilities"
 Icon="gamepad"
-Title="Connection"
+Title="gamepad"
 ---
 <?php
+
 	Build controller connection page here including bluetooth
+	<div>
+		<p>Bloopy Bloop</p>
+	</div>
+	
+	<script>
+		$(function() {
+			console.log('boop');
+		});
+	</script>
 ?>
