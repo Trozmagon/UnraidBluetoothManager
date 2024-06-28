@@ -9,12 +9,12 @@
 	<!ENTITY emhttp		"/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN  name="&name;"
-         author="&author;"
-         version="&version;"
-		 launch="&launch;"
-         pluginURL="&pluginURL;"
-		 icon="gamepad">
+<PLUGIN	name="&name;"
+		author="&author;"
+		version="&version;"
+		launch="&launch;"
+		pluginURL="&pluginURL;"
+		icon="gamepad">
 
 	<CHANGES>
 
@@ -22,23 +22,23 @@
 		- Initial release
 
 	</CHANGES>
-	
+
 	<FILE Name="&emhttp;/README.md">
 		<INLINE>
-			**Nvidia Driver**
-
-			This plugin will install the Nvidia drivers to utilize your Nvidia graphics card in your Docker container(s).
+			**Gamepad Driver**
+			
+			This plugin will install the Gamepad drivers to utilize your Nvidia graphics card in your Docker container(s).
 			This plugin satisfies installation prerequisites of the GPU Statistics plugin from Community Apps. With both plugins installed you can display Nvidia GPU utilization on the unRAID Dashboard.
 		</INLINE>
 	</FILE>
 
-	
 
-	<FILE Name="&emhttp;/Index.page">
+
+	<FILE Name="&emhttp;/index.page">
 		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
 	</FILE>
-	
-	
+
+
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
 		<INLINE>
@@ -54,7 +54,7 @@
 		</INLINE>
 	</FILE>
 	<!-- Install Script End -->
-	
+
 	<!-- Uninstall Script Start -->
 	<FILE Run="/bin/bash" Method="remove">
 		<INLINE>
