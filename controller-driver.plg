@@ -6,7 +6,7 @@
 	<!ENTITY version	"2024.06.27">
 	<!ENTITY launch		"Settings/Index">
 	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
-	<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+	<!ENTITY emhttp		"/usr/local/emhttp/plugins/&name;">
 ]>
 
 <PLUGIN  name="&name;"
@@ -35,7 +35,7 @@
 	
 
 	<FILE Name="&emhttp;/Index.page">
-		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/Index.page</URL>
+		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
 	</FILE>
 	
 	
