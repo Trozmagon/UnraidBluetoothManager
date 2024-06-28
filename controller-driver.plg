@@ -4,7 +4,7 @@
 	<!ENTITY name		"controller-driver">
 	<!ENTITY author		"Trozmagon">
 	<!ENTITY version	"2024.06.27">
-	<!ENTITY launch		"settings/index">
+	<!ENTITY launch		"Settings/Index">
 	<!ENTITY pluginURL	"https://raw.githubusercontent.com/Trozmagon/controller-driver/main/controller-driver.plg">
 	<!ENTITY emhttp		"/usr/local/emhttp/plugins/&name;">
 ]>
@@ -27,8 +27,8 @@
 		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/README.md</URL>
 	</FILE>
 
-	<FILE Name="&emhttp;/index.page">
-		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
+	<FILE Name="&emhttp;/Index.page">
+		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/Index.page</URL>
 	</FILE>
 
 
