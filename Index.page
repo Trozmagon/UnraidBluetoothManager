@@ -1,18 +1,17 @@
-Icon="gamepad"
 Title="Gamepad Manager"
 ---
-<?php
-
-	Build controller connection page here including bluetooth
-
+<?PHP
+        /* Build controller connection page here including bluetooth */
 ?>
 
-<div>
-	<p>Bloopy Bloop</p>
+<div style="display:flex;">
+    <div><p>Bloopy Bloop</p></div>
+    <div><p>Bloopy Bloop</p></div>
+    <button type="button" onclick="alert('boop');">test</button>
 </div>
-	
+
 <script>
-	$(function() {
-		console.log('boop');
-	});
+    $(function() {
+        alert('boop');
+    });
 </script>
