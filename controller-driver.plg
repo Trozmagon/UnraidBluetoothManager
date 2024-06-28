@@ -24,15 +24,8 @@
 	</CHANGES>
 
 	<FILE Name="&emhttp;/README.md">
-		<INLINE>
-			**Gamepad Driver**
-			
-			This plugin will install the Gamepad drivers to utilize your Nvidia graphics card in your Docker container(s).
-			This plugin satisfies installation prerequisites of the GPU Statistics plugin from Community Apps. With both plugins installed you can display Nvidia GPU utilization on the unRAID Dashboard.
-		</INLINE>
+		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/README.md</URL>
 	</FILE>
-
-
 
 	<FILE Name="&emhttp;/index.page">
 		<URL>https://raw.githubusercontent.com/Trozmagon/controller-driver/main/include/index.page</URL>
