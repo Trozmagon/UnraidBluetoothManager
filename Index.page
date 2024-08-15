@@ -15,7 +15,7 @@ Title="Gamepad Manager"
         function call() {
             jQuery.ajax({
                 type: "POST",
-                url: 'functions.php',
+                url: 'Functions.page',
                 dataType: 'json',
                 data: {functionname: 'add', arguments: [1, 2]},
                 success: function (obj, textstatus) {

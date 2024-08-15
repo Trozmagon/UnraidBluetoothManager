@@ -32,11 +32,14 @@
 		<URL>https://raw.githubusercontent.com/&author;/&name;/main/Index.page</URL>
 	</FILE>
 
+	<FILE Name="&emhttp;/Functions.page">
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/Functions.page</URL>
+	</FILE>
+
 
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
 		<INLINE>
-			makefile /etc/udev/rules.d/99-joystick.rules
 			<!-- if bluez isn't installed add bluez -->
 			cd &emhttp;
 
