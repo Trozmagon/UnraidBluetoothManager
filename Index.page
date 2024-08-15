@@ -51,14 +51,14 @@ Title="Gamepad Manager"
             data: {functionname: 'add', arguments: [1, 2]},
             success: (obj, textstatus) => {
                 if( !('error' in obj) ) {
-                    yourVariable = obj.result;
+                    let test = obj.result;
                 }
                 else {
                     console.log(obj.error);
                 }
             },
-            error: (jqXHR, textStatus, errorThrown ) => {
-            
+            error: (jqXHR, textStatus, errorThrown) => {
+                let test = jqXHR;
             }
         });
         }
