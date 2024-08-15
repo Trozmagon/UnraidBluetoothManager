@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-	<!ENTITY name		"gamepad-manager">
+	<!ENTITY name		"bluetooth-manager">
 	<!ENTITY author		"Trozmagon">
 	<!ENTITY version	"2024.06.27">
 	<!ENTITY launch		"Settings/Index">
@@ -15,7 +15,7 @@
 		version="&version;"
 		launch="&launch;"
 		pluginURL="&pluginURL;"
-		icon="gamepad">
+		icon="bluetooth">
 
 	<CHANGES>
 

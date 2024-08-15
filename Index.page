@@ -1,28 +1,25 @@
-Title="Gamepad Manager"
+Title="Bluetooth Manager"
 
 ---
 <?php
 /*
  */
- $btmName = 'gamepad-manager';
+ $btmName = 'bluetooth-manager';
 ?>
 
 
 
 <style>
-    .bluetooth-manager-container {
+    .btm-container {
         display:flex;
         flex-direction:column;
     }
-    .bluetooth-manager-container row {
+    .btm-container row {
         flex:1;
     }
 </style>
 
-<div class="bluetooth-manager-container">
-    <div class="row">
-        <p>Bloopy Bloop</p>
-    </div>
+<div class="btm-container">
     <div class="row">
         <p>Bloopy Bloop</p>
     </div>
