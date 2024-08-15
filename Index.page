@@ -1,35 +1,38 @@
 Title="Bluetooth Manager"
-
 ---
 <?php
-    $btmName = 'bluetooth-manager';
-    $connectedDevices = [];
+$btmName = 'bluetooth-manager';
+$connectedDevices = [];
 
-    exec("bluetoothctl devices", $connectedDevices);
+exec("bluetoothctl devices", $connectedDevices);
 ?>
 
 <style>
     .btm-container {
-        display:flex;
-        flex-direction:column;
+        display: flex;
+        flex-direction: column;
     }
-    .btm-container row {
-        flex:1;
-    }
+
+        .btm-container row {
+            flex: 1;
+        }
 </style>
 
 <div class="btm-container">
     <div class="row">
         <ul>
-        <?php 
+            <?php
             foreach ($connectedDevices as $connectedDevice) {
                 $device = (explode(" ", $connectedDevice));
+                $deviceId = join("", (explode(":", $device[1])));
+                $deviceName = $device[2];
+
                 echo '<li>
-                        <input type="radio" id="'. $device[1] .'" name="' . $device[1] . '" value="' . $device[1] . '">
-                        <label for="' . $device[1] . '">' . $device[2] . '</label>
+                        <input type="radio" id="' . $deviceId . '" name="' . $deviceId . '" value="' . $deviceId . '" />
+                        <label for="' . $deviceId . '">' . $deviceName . '</label>
                     </li>';
             }
-        ?>
+            ?>
         </ul>
     </div>
     <div class="row">
@@ -42,8 +45,8 @@ Title="Bluetooth Manager"
 <script>
     function scan() {
         $('div.spinner').show();
-        
-        $.get('/plugins/<?=$btmName?>/include/Scan.php', (data) => {
+
+        $.get('/plugins/<?= $btmName ?>/include/Scan.php', (data) => {
             $('div.spinner').hide();
 
             $('.btm-output').html(data);
@@ -52,8 +55,8 @@ Title="Bluetooth Manager"
 
     function pair(id) {
         $('div.spinner').show();
-        
-        $.get(`/plugins/<?=$btmName?>/include/Pair.php?id=${id}`, (data) => {
+
+        $.get(`/plugins/<?= $btmName ?>/include/Pair.php?id=${id}`, (data) => {
             $('div.spinner').hide();
 
             $('.btm-output').html(data);
@@ -61,6 +64,6 @@ Title="Bluetooth Manager"
     }
 
     $(function() {
-        
+
     });
 </script>
