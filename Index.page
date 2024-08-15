@@ -1,7 +1,35 @@
 Title="Gamepad Manager"
 ---
-<?PHP
-        
+ <?php
+    header('Content-Type: application/json');
+
+    $aResult = array();
+
+    if( !isset($_POST['functionname']) ) { $aResult['error'] = 'No function name!'; }
+
+    if( !isset($_POST['arguments']) ) { $aResult['error'] = 'No function arguments!'; }
+
+    if( !isset($aResult['error']) ) {
+
+        switch($_POST['functionname']) {
+            case 'add':
+               if( !is_array($_POST['arguments']) || (count($_POST['arguments']) < 2) ) {
+                   $aResult['error'] = 'Error in arguments!';
+               }
+               else {
+                   $aResult['result'] = add(floatval($_POST['arguments'][0]), floatval($_POST['arguments'][1]));
+               }
+               break;
+
+            default:
+               $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
+               break;
+        }
+
+    }
+
+    echo json_encode($aResult);
+
 ?>
 
 <div style="display:flex;">
@@ -18,16 +46,19 @@ Title="Gamepad Manager"
     function callFunctions() {
         jQuery.ajax({
             type: "POST",
-            url: 'Functions.page',
+            url: 'Index.page',
             dataType: 'json',
             data: {functionname: 'add', arguments: [1, 2]},
-            success: function (obj, textstatus) {
+            success: (obj, textstatus) => {
                 if( !('error' in obj) ) {
                     yourVariable = obj.result;
                 }
                 else {
                     console.log(obj.error);
                 }
+            },
+            error: (jqXHR, textStatus, errorThrown ) => {
+            
             }
         });
         }
