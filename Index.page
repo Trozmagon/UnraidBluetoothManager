@@ -5,7 +5,7 @@ Title="Bluetooth Manager"
     $btmName = 'bluetooth-manager';
     $connectedDevices = [];
 
-    exec("bluetoothctl", $connectedDevices);
+    exec("bluetoothctl devices | cut -f2 -d' ' | while read uuid; do bluetoothctl info $uuid; done|grep -e "Device\|Connected\|Name"", $connectedDevices);
 ?>
 
 
@@ -28,7 +28,7 @@ Title="Bluetooth Manager"
         <button type="button" onclick="scan();">Scan</button>
         <button type="button" onclick="callFunctions();">Pair</button>
     </div>
-    <div class="btm-output"></div>
+    <div class="btm-output">$connectedDevices</div>
 </div>
 
 <script>
