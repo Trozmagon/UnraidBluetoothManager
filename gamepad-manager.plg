@@ -36,10 +36,12 @@
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
 		<INLINE>
+			makefile /etc/udev/rules.d/99-joystick.rules
+			<!-- if bluez isn't installed add bluez -->
 			cd &emhttp;
 
-			echo "cloning xpadneo"
-			git clone https://github.com/atar-axis/xpadneo.git
+			<!-- echo "cloning xpadneo" -->
+			<!-- git clone https://github.com/atar-axis/xpadneo.git -->
 
 
 			<!-- cd xpadneo -->
