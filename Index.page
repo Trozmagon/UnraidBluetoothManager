@@ -5,7 +5,7 @@ Title="Bluetooth Manager"
     $btmName = 'bluetooth-manager';
     $connectedDevices = [];
 
-    exec("bluetoothctl devices | cut -f2 -d' ' | while read uuid; do bluetoothctl info $uuid; done|grep -e "Device\|Connected\|Name"", $connectedDevices);
+    exec("bluetoothctl devices", $connectedDevices);
 ?>
 
 
@@ -22,7 +22,11 @@ Title="Bluetooth Manager"
 
 <div class="btm-container">
     <div class="row">
-        <p>Bloopy Bloop</p>
+        <ul>
+        foreach ($connectedDevices as $connectedDevice) {
+          echo "<li>$connectedDevice</li>>";
+        }
+        </ul>
     </div>
     <div class="row">
         <button type="button" onclick="scan();">Scan</button>
