@@ -35,6 +35,10 @@ exec("bluetoothctl devices", $connectedDevices);
 
                 echo '<li><input type="radio" id="' . $deviceId . '" name="' . $deviceId . '" value="' . $deviceId . '" /><label for="' . $deviceId . '">' . $deviceName . '</label></li>';
             }
+
+            foreach ($connectedDevices as $connectedDevice) {
+                echo "<li>$connectedDevice</li>";
+            }
             ?>
         </ul>
     </div>
