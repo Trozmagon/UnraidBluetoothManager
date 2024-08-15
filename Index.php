@@ -8,8 +8,6 @@ Title="Bluetooth Manager"
     exec("bluetoothctl devices", $connectedDevices);
 ?>
 
-
-
 <style>
     .btm-container {
         display:flex;
@@ -25,7 +23,11 @@ Title="Bluetooth Manager"
         <ul>
         <?php 
             foreach ($connectedDevices as $connectedDevice) {
-              echo "<li>$connectedDevice</li>>";
+                $device = (explode(" ", $connectedDevice));
+                echo "<li>
+                        <input type="radio" id="$device[1]" name="$device[1]" value="$device[1]">
+                        <label for="$device[1]">$device[2]</label>
+                    </li>";
             }
         ?>
         </ul>
