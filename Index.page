@@ -1,37 +1,45 @@
 Title="Gamepad Manager"
----
- <?php
 
+---
+<?php
+/*
+ */
 ?>
 
-<div style="display:flex;">
-    <div><p>Bloopy Bloop</p></div>
-    <div><p>Bloopy Bloop</p></div>
-    <button type="button" onclick="callFunctions();">test</button>
+$name = 'gamepad-manager';
+
+<style>
+    .bluetooth-plugin-container {
+        display:flex;
+        flex-direction:column;
+    }
+    .bluetooth-plugin-container row {
+        flex:1;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <p>Bloopy Bloop</p>
+    </div>
+    <div class="row">
+        <p>Bloopy Bloop</p>
+    </div>
+    <div class="row">
+        <button type="button" onclick="callFunctions();">test</button>
+    </div>
 </div>
 
 <script>
+    function callFunctions() {
+        $('div.spinner').show();
+
+        $.get('/plugins/<?=$plugin?>/include/Functions.php', (data) => {
+            $('div.spinner').hide();
+        });
+    }
+
     $(function() {
         
     });
-
-    function callFunctions() {
-        jQuery.ajax({
-            type: "POST",
-            url: 'Functions.php',
-            dataType: 'json',
-            data: {functionname: 'add', arguments: [1, 2]},
-            success: (obj, textstatus) => {
-                if( !('error' in obj) ) {
-                    let test = obj.result;
-                }
-                else {
-                    console.log(obj.error);
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                let test = jqXHR;
-            }
-        });
-        }
 </script>
