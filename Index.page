@@ -23,16 +23,18 @@ Title="Bluetooth Manager"
 <div class="btm-container">
     <div class="row">
         <ul>
-        foreach ($connectedDevices as $connectedDevice) {
-          echo "<li>$connectedDevice</li>>";
-        }
+        <?php 
+            foreach ($connectedDevices as $connectedDevice) {
+              echo "<li>$connectedDevice</li>>";
+            }
+        ?>
         </ul>
     </div>
     <div class="row">
         <button type="button" onclick="scan();">Scan</button>
         <button type="button" onclick="callFunctions();">Pair</button>
     </div>
-    <div class="btm-output">$connectedDevices</div>
+    <div class="btm-output"></div>
 </div>
 
 <script>
