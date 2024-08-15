@@ -24,10 +24,10 @@ Title="Bluetooth Manager"
         <?php 
             foreach ($connectedDevices as $connectedDevice) {
                 $device = (explode(" ", $connectedDevice));
-                echo "<li>
-                        <input type="radio" id="$device[1]" name="$device[1]" value="$device[1]">
-                        <label for="$device[1]">$device[2]</label>
-                    </li>";
+                echo '<li>
+                        <input type="radio" id="'. $device[1] .'" name="' . $device[1] . '" value="' . $device[1] . '">
+                        <label for="' . $device[1] . '">' . $device[2] . '</label>
+                    </li>';
             }
         ?>
         </ul>
