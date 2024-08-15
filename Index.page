@@ -4,21 +4,22 @@ Title="Gamepad Manager"
 <?php
 /*
  */
+ $btmName = 'gamepad-manager';
 ?>
 
-$name = 'gamepad-manager';
+
 
 <style>
-    .bluetooth-plugin-container {
+    .bluetooth-manager-container {
         display:flex;
         flex-direction:column;
     }
-    .bluetooth-plugin-container row {
+    .bluetooth-manager-container row {
         flex:1;
     }
 </style>
 
-<div class="container">
+<div class="bluetooth-manager-container">
     <div class="row">
         <p>Bloopy Bloop</p>
     </div>
@@ -34,7 +35,7 @@ $name = 'gamepad-manager';
     function callFunctions() {
         $('div.spinner').show();
 
-        $.get('/plugins/<?=$plugin?>/include/Functions.php', (data) => {
+        $.get('/plugins/<?=$btmName?>/include/Functions.php', (data) => {
             $('div.spinner').hide();
         });
     }
