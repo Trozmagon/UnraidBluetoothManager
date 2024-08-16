@@ -77,12 +77,19 @@ exec("bluetoothctl devices", $pairedDevices);
         $('input[type="radio"]').on('change', (event) => {
             let radio = $(event.currentTarget);
 
-            if(!radio.is(':checked')) {
-                radio.prop('checked', false);
+            if(radio.hasClass('checked')) {
                 $('#disconnect').hide();
+                
+                radio
+                    .prop('checked', false)
+                    .removeClass('checked');
             }
             else {
                 $('#disconnect').show();
+                
+                radio
+                    .prop('checked', true)
+                    .addClass('checked');
             }
         });
     });
