@@ -98,7 +98,12 @@ function disconnect($deviceId)
 
     function disconnect() {
         let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
-        let test = <?php disconnect(selectedDeviceId); ?>
+        
+        $.get(`/plugins/<?= $btmName ?>/functions/Disconnect.php?id=${selectedDeviceId}`, (data) => {
+            $('div.spinner').hide();
+
+            $('.btm-output').html(data);
+        });
     }
 
     $(function() {

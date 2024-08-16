@@ -32,12 +32,12 @@
 		<URL>https://raw.githubusercontent.com/&author;/&name;/main/Index.page</URL>
 	</FILE>
 
-	<FILE Name="&emhttp;/include/Pair.php">
-		<URL>https://raw.githubusercontent.com/&author;/&name;/main/include/Pair.php</URL>
+	<FILE Name="&emhttp;/functions/Connect.php">
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/functions/Connect.php</URL>
 	</FILE>
 
-	<FILE Name="&emhttp;/include/Scan.php">
-		<URL>https://raw.githubusercontent.com/&author;/&name;/main/include/Scan.php</URL>
+	<FILE Name="&emhttp;/functions/Disconnect.php">
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/functions/Disconnect.php</URL>
 	</FILE>
 
 
