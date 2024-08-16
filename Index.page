@@ -2,9 +2,9 @@ Title="Bluetooth Manager"
 ---
 <?php
 $btmName = 'bluetooth-manager';
-$connectedDevices = [];
+$pairedDevices = [];
 
-exec("bluetoothctl devices", $connectedDevices);
+exec("bluetoothctl devices", $pairedDevices);
 ?>
 
 <style>
@@ -17,7 +17,7 @@ exec("bluetoothctl devices", $connectedDevices);
             flex: 1;
         }
 
-    .btm-container {
+    .btm-container ul {
         list-style-type:none;
         padding:0px;
         margin:0px;
@@ -26,17 +26,20 @@ exec("bluetoothctl devices", $connectedDevices);
 
 <div class="btm-container">
     <div class="row">
+        <div class="column">
+            <span class="title">Paired Devices</span>
         <ul>
             <?php
-            foreach ($connectedDevices as $connectedDevice) {
-                $device = explode(" ", $connectedDevice);
+            foreach ($pairedDevices as $pairedDevice) {
+                $device = explode(" ", $pairedDevice);
                 $deviceId = $device[1];
                 $deviceName = join(" ", array_slice($device, 2));
 
-                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceId + $deviceName . '</span></li>';
+                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . ' (' . $deviceId . ')' . '</span></li>';
             }
             ?>
         </ul>
+        </div>
     </div>
     <div class="row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
