@@ -50,7 +50,8 @@ function devices()
 
     exec("bluetoothctl devices", $devices);
 
-    return json_encode($devices);
+    echo json_encode($devices);
+    exit;
 }
 
 function toggleScan($state)

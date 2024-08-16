@@ -118,11 +118,14 @@ $btmName = 'bluetooth-manager';
                 let device = availableDevice.split(" ");
                 let deviceId = device[1];
                 let deviceName = device.slice(2).join(" ");
+                let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
 
-                deviceList.append(`<li>
-                    <input type="radio" name="paired" value="${deviceId}" />
-                    <span>${deviceName} (${deviceId})</span>
-                </li>`);
+                if(!deviceExists) {
+                    deviceList.append(`<li>
+                        <input type="radio" name="paired" value="${deviceId}" />
+                        <span>${deviceName} (${deviceId})</span>
+                    </li>`);
+                }
             });
         });
     }
