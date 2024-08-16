@@ -14,16 +14,23 @@ if (isset($_POST['method'])) {
 
 function connect($deviceId)
 {
-    echo "$deviceId";
+    $response = "";
+
+    exec("bluetoothctl connect $deviceId", $response);
+    exec("bluetoothctl trust $deviceId");
+
+    echo "$response";
     exit;
 }
 
 function disconnect($deviceId)
 {
-    exec("bluetoothctl untrust", $deviceId);
-    exec("bluetoothctl remove", $deviceId);
+    $response = "";
+
+    exec("bluetoothctl untrust $deviceId");
+    exec("bluetoothctl remove $deviceId", $response);
     
-    echo "$deviceId";
+    echo "$response";
     exit;
 }
 ?>

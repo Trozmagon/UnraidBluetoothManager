@@ -73,24 +73,28 @@ exec("bluetoothctl devices", $pairedDevices);
     <div class="btm-row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
     </div>
-    <div class="btm-output"></div>
+    <div class="btm-row">
+        <input type="text" id="connect-id" />
+        <button id="disconnect" type="button" onclick="connect();" style="display:none;">Disconnect</button>
+    </div>
 </div>
 
 <script>
     function connect() {
-        let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
+        let deviceId = $('#connect-id').val();
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
         let data =  { 
-            id: selectedDeviceId,
-            method: 'sconnect'
+            id: deviceId,
+            method: 'connect'
         };
 
         $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            $('div.spinner').hide();
+            
+            alert(`${response}`);
 
-            alert(`action performed successfully: ${response}`);
+            $('div.spinner').hide();
         });
     }
 
@@ -105,7 +109,11 @@ exec("bluetoothctl devices", $pairedDevices);
         $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            $(`input[value="${response}"]`).parent().remove();
+            if(response != null) {
+                $(`input[value="${response}"]`).parent().remove();
+            }
+
+            alert(`${response}`);
 
             $('div.spinner').hide();
         });
