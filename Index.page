@@ -29,48 +29,35 @@ exec("bluetoothctl devices", $connectedDevices);
         <ul>
             <?php
             foreach ($connectedDevices as $connectedDevice) {
-                $device = (explode(" ", $connectedDevice));
-                $deviceId = join("", (explode(":", $device[1])));
-                $deviceName = $device[2];
+                $device = explode(" ", $connectedDevice);
+                $deviceId = str_replace(":", "-", $device[1]);
+                $deviceName = join(" ", array_slice($device, 2));
 
-                echo '<li><input type="radio" value="' . $deviceId . '" /><span>' . $deviceName . '</span></li>';
-            }
-
-            foreach ($connectedDevices as $connectedDevice) {
-                echo "<li>$connectedDevice</li>";
+                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . '</span></li>';
             }
             ?>
         </ul>
     </div>
     <div class="row">
-        <button type="button" onclick="scan();">Scan</button>
-        <button type="button" onclick="callFunctions();">Pair</button>
+        <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
     </div>
     <div class="btm-output"></div>
 </div>
 
 <script>
-    function scan() {
+    function disconnect() {
+        let selectedDeviceId = $('input[type="radio"][name="devices"]:checked').val().replace('-', ':')
+        
         $('div.spinner').show();
 
-        $.get('/plugins/<?= $btmName ?>/include/Scan.php', (data) => {
-            $('div.spinner').hide();
+        console.log(selectedDeviceId);
 
-            $('.btm-output').html(data);
-        });
-    }
-
-    function pair(id) {
-        $('div.spinner').show();
-
-        $.get(`/plugins/<?= $btmName ?>/include/Pair.php?id=${id}`, (data) => {
-            $('div.spinner').hide();
-
-            $('.btm-output').html(data);
-        });
+        $('div.spinner').hide();
     }
 
     $(function() {
-
+        $('input[type="radio"]').on('change', (event) => {
+            $('#disconnect').show();
+        });
     });
 </script>
