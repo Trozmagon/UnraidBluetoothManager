@@ -24,7 +24,7 @@ if (isset($_POST['method'])) {
 
 function connect($deviceId)
 {
-    $response = [];
+    $response = "";
 
     exec("bluetoothctl pair $deviceId");
     exec("bluetoothctl trust $deviceId");
@@ -36,7 +36,7 @@ function connect($deviceId)
 
 function disconnect($deviceId)
 {
-    $response = [];
+    $response = "";
     
     exec("bluetoothctl untrust $deviceId");
     exec("bluetoothctl remove $deviceId", $response);
@@ -45,20 +45,28 @@ function disconnect($deviceId)
     exit;
 }
 
+function getDeviceInfo($deviceId)
+{
+    $deviceInfo = "";
+
+    exec("bluetoothctl info $deviceId", $deviceInfo);
+
+    echo $deviceInfo;
+    exit;
+}
+
 function devices()
 {
     $devices = [];
 
-    exec('bluetoothctl devices | cut -f2 -d" " | while read uuid; do bluetoothctl info $uuid; done | grep -E "Device|Connected|Name|Paired" | xargs', $devices);
-    
+    exec("bluetoothctl devices", $devices);
+
     echo json_encode($devices);
     exit;
 }
 
 function toggleScan($state)
 {
-
-
     if ($state == true) {
         exec("bluetoothctl scan on");
         echo "Toggle Scan: On";
