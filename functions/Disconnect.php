@@ -1,9 +1,26 @@
 <?PHP
-$deviceId = $_SERVER['id'];
-$result = "";
+if (isset($_POST['method'])) {
+    $deviceId = $_POST['id'];
 
-exec("untrust $deviceId");
-exec("remove $deviceId", $result);
+    switch ($_POST['method']) {
+        case 'connect':
+            connect();
+            break;
+        case 'disconnect':
+            disconnect();
+            break;
+    }
+}
 
-echo implode(' ', $result);
+function connect()
+{
+    echo "The connect function is called.";
+    exit;
+}
+
+function disconnect()
+{
+    echo "The disconnect function is called.";
+    exit;
+}
 ?>
