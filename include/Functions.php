@@ -20,6 +20,9 @@ function connect($deviceId)
 
 function disconnect($deviceId)
 {
+    exec("bluetoothctl untrust", $deviceId);
+    exec("bluetoothctl remove", $deviceId);
+    
     echo "$deviceId";
     exit;
 }

@@ -105,9 +105,9 @@ exec("bluetoothctl devices", $pairedDevices);
         $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            $('div.spinner').hide();
+            $(`input[value="${response}"]`).parent().remove();
 
-            alert(`action performed successfully: ${response}`);
+            $('div.spinner').hide();
         });
     }
 
