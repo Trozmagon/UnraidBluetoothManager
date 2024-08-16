@@ -13,14 +13,14 @@ exec("bluetoothctl devices", $pairedDevices);
         flex-direction: column;
     }
 
-        .btm-container row {
+        .btm-container btm-row {
             flex: 1;
         }
 
-        .btm-container colum {
+        .btm-container btm-colum {
         }
 
-        .btm-container .title {
+        .btm-container .btm-title {
             font-weight: bold;
             font-size: 1.2em;
             display: block;
@@ -31,12 +31,30 @@ exec("bluetoothctl devices", $pairedDevices);
             padding: 0px;
             margin: 0px;
         }
+
+            .btm-container ul li {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+
+                .btm-container ul li input, .btm-container ul li span {
+                    margin: 3px 3px 0px 5px;
+                }
+
+                .btm-container ul li input {
+                    
+                }
+
+                .btm-container ul li span {
+                    
+                }
 </style>
 
 <div class="btm-container">
-    <div class="row">
-        <div class="column">
-            <span class="title">Paired Devices</span>
+    <div class="btm-row">
+        <div class="btm-column">
+            <span class="btm-title">Paired Devices</span>
             <ul>
                 <?php
                 foreach ($pairedDevices as $pairedDevice) {
@@ -50,7 +68,7 @@ exec("bluetoothctl devices", $pairedDevices);
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="btm-row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
     </div>
     <div class="btm-output"></div>
@@ -79,14 +97,14 @@ exec("bluetoothctl devices", $pairedDevices);
 
             if(radio.hasClass('checked')) {
                 $('#disconnect').hide();
-                
+
                 radio
                     .prop('checked', false)
                     .removeClass('checked');
             }
             else {
                 $('#disconnect').show();
-                
+
                 radio
                     .prop('checked', true)
                     .addClass('checked');
