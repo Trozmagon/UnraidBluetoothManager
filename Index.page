@@ -75,7 +75,7 @@ exec("bluetoothctl devices", $pairedDevices);
     </div>
     <div class="btm-row">
         <input type="text" id="connect-id" />
-        <button id="disconnect" type="button" onclick="connect();" style="display:none;">Disconnect</button>
+        <button id="disconnect" type="button" onclick="connect();">Connect</button>
     </div>
 </div>
 
