@@ -26,8 +26,9 @@ function connect($deviceId)
 {
     $response = [];
 
-    exec("bluetoothctl connect $deviceId", $response);
+    exec("bluetoothctl pair $deviceId");
     exec("bluetoothctl trust $deviceId");
+    exec("bluetoothctl connect $deviceId", $response);
 
     echo $response;
     exit;
@@ -48,7 +49,7 @@ function devices()
 {
     $devices = [];
 
-    exec('bluetoothctl devices | cut -f2 -d" " | while read uuid; do bluetoothctl info $uuid; done|grep -e "Device\|Connected\|Name"', $devices);
+    exec('bluetoothctl devices | cut -f2 -d" " | while read uuid; do bluetoothctl info $uuid; done | grep -e "Device\|Connected\|Name\|Paired"', $devices);
     
     echo json_encode($devices);
     exit;
@@ -56,18 +57,17 @@ function devices()
 
 function toggleScan($state)
 {
-    echo "Toggle Scan: $state";
+
+
+    if ($state == true) {
+        exec("bluetoothctl scan on");
+        echo "Toggle Scan: On";
+    } else {
+        exec("bluetoothctl scan off");
+        echo "Toggle Scan: Off";
+    }
+
     exit;
-
-    //if ($state == true) {
-    //    exec("bluetoothctl scan on");
-
-    //    return "Discovery Started";
-    //} else {
-    //    exec("bluetoothctl scan off");
-
-    //    return "Discovery Stopped";
-    //}
 }
 
 ?>
