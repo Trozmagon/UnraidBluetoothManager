@@ -49,7 +49,7 @@ function devices()
 {
     $devices = [];
 
-    exec('bluetoothctl devices | cut -f2 -d" " | while read uuid; do bluetoothctl info $uuid; done | grep -e "Device\|Connected\|Name\|Paired"', $devices);
+    exec('bluetoothctl devices | cut -f2 -d" " | while read uuid; do bluetoothctl info $uuid; done | grep -E "Device|Connected|Name|Paired" | xargs', $devices);
     
     echo json_encode($devices);
     exit;
