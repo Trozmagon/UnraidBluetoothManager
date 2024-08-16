@@ -9,6 +9,9 @@ if (isset($_POST['method'])) {
         case 'disconnect':
             disconnect($deviceId);
             break;
+        case 'devices':
+            getDevices();
+            break;
     }
 }
 
@@ -30,5 +33,14 @@ function disconnect($deviceId)
     exec("bluetoothctl remove $deviceId", $response);
     
     return $response;
+}
+
+function getDevices()
+{
+    $devices = [];
+
+    exec("bluetoothctl devices", $devices);
+
+    return $devices;
 }
 ?>

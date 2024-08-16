@@ -5,7 +5,7 @@ Title="Bluetooth Manager"
 $btmName = 'bluetooth-manager';
 $pairedDevices = [];
 
-exec("bluetoothctl devices", $pairedDevices);
+exec("bluetoothctl scan on");
 
 ?>
 
@@ -45,11 +45,9 @@ exec("bluetoothctl devices", $pairedDevices);
                 }
 
                 .btm-container ul li input {
-                    
                 }
 
                 .btm-container ul li span {
-                    
                 }
 </style>
 
@@ -83,7 +81,7 @@ exec("bluetoothctl devices", $pairedDevices);
     function connect() {
         let deviceId = $('#connect-id').val();
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  { 
+        let data =  {
             id: deviceId,
             method: 'connect'
         };
@@ -91,7 +89,7 @@ exec("bluetoothctl devices", $pairedDevices);
         $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            
+
             alert(`${response}`);
 
             $('div.spinner').hide();
@@ -101,7 +99,7 @@ exec("bluetoothctl devices", $pairedDevices);
     function disconnect() {
         let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  { 
+        let data =  {
             id: selectedDeviceId,
             method: 'disconnect'
         };
@@ -119,7 +117,29 @@ exec("bluetoothctl devices", $pairedDevices);
         });
     }
 
+    function updateAvailableDevices() {
+        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
+        let data =  {
+            method: 'devices'
+        };
+
+        $('div.spinner').show();
+
+        $.get(url, data, (response) => {
+            $('div.spinner').hide();
+        });
+    }
+
     $(function() {
+        //on page load enable scan
+        //on page close disable scan
+
+        updateAvailableDevices();
+
+        setInterval(() => {
+            updateAvailableDevices();
+        }, 3000);
+
         $('input[type="radio"]').on('click', (event) => {
             let radio = $(event.currentTarget);
 
