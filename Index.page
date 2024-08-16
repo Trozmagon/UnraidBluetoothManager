@@ -77,7 +77,7 @@ exec("bluetoothctl devices", $pairedDevices);
         $('input[type="radio"]').on('change', (event) => {
             let radio = $(event.currentTarget);
 
-            if(radio.is(':checked')) {
+            if(!radio.is(':checked')) {
                 radio.prop('checked', false);
                 $('#disconnect').hide();
             }
