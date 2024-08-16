@@ -30,10 +30,10 @@ exec("bluetoothctl devices", $connectedDevices);
             <?php
             foreach ($connectedDevices as $connectedDevice) {
                 $device = explode(" ", $connectedDevice);
-                $deviceId = str_replace(":", "-", $device[1]);
+                $deviceId = $device[1];
                 $deviceName = join(" ", array_slice($device, 2));
 
-                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . '</span></li>';
+                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceId + $deviceName . '</span></li>';
             }
             ?>
         </ul>
@@ -45,14 +45,20 @@ exec("bluetoothctl devices", $connectedDevices);
 </div>
 
 <script>
-    function disconnect() {
-        let selectedDeviceId = $('input[type="radio"][name="devices"]:checked').val().replace('-', ':')
-        
+    function connect() {
         $('div.spinner').show();
 
-        console.log(selectedDeviceId);
+        $.get('/plugins/<?= $btmName ?>/include/Scan.php', (data) => {
+            $('div.spinner').hide();
 
-        $('div.spinner').hide();
+            $('.btm-output').html(data);
+        });
+    }
+
+    function disconnect() {
+        let selectedDeviceId = $('input[type="radio"][name="devices"]:checked').val();
+
+        console.log(selectedDeviceId);
     }
 
     $(function() {
