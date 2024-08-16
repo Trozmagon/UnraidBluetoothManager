@@ -1,35 +1,11 @@
 Title="Bluetooth Manager"
 ---
 <?php
-if (isset($_POST['method'])) {
-    $deviceId = $_POST['id'];
 
-    switch ($_POST['method']) {
-        case 'connect':
-            connect();
-            break;
-        case 'disconnect':
-            disconnect();
-            break;
-    }
-} else {
-    $btmName = 'bluetooth-manager';
-    $pairedDevices = [];
+$btmName = 'bluetooth-manager';
+$pairedDevices = [];
 
-    exec("bluetoothctl devices", $pairedDevices);
-}
-
-function connect()
-{
-    echo "The connect function is called.";
-    exit;
-}
-
-function disconnect()
-{
-    echo "The disconnect function is called.";
-    exit;
-}
+exec("bluetoothctl devices", $pairedDevices);
 
 ?>
 
@@ -101,24 +77,26 @@ function disconnect()
 </div>
 
 <script>
-    function phpadd() {
-        var phpadd =  //call the php add function
-        alert(phpadd);
-    }
-
     function connect() {
+        let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
+        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
+        let data =  { 
+            id: selectedDeviceId,
+            method: 'sconnect'
+        };
+
         $('div.spinner').show();
 
-        $.get('/plugins/<?= $btmName ?>/include/Scan.php', (data) => {
+        $.post(url, data, (response) => {
             $('div.spinner').hide();
 
-            $('.btm-output').html(data);
+            alert(`action performed successfully: ${response}`);
         });
     }
 
     function disconnect() {
         let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
-        let url = '/plugins/<?= $btmName ?>/Index.page'
+        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
         let data =  { 
             id: selectedDeviceId,
             method: 'disconnect'

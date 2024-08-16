@@ -33,13 +33,8 @@
 	</FILE>
 
 	<FILE Name="&emhttp;/functions/Connect.php">
-		<URL>https://raw.githubusercontent.com/&author;/&name;/main/functions/Connect.php</URL>
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/include/Functions.php</URL>
 	</FILE>
-
-	<FILE Name="&emhttp;/functions/Disconnect.php">
-		<URL>https://raw.githubusercontent.com/&author;/&name;/main/functions/Disconnect.php</URL>
-	</FILE>
-
 
 	<!-- Install Script Start -->
 	<FILE Run="/bin/bash">
