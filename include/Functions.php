@@ -24,42 +24,55 @@ if (isset($_POST['method'])) {
 
 function connect($deviceId)
 {
-    $response = [];
+    echo "$deviceId";
+    exit;
+    //$response = [];
 
-    exec("bluetoothctl connect $deviceId", $response);
-    exec("bluetoothctl trust $deviceId");
+    //exec("bluetoothctl connect $deviceId", $response);
+    //exec("bluetoothctl trust $deviceId");
 
-    return $response;
+    //return $response;
 }
 
 function disconnect($deviceId)
 {
-    $response = [];
+    echo "$deviceId";
+    exit;
 
-    exec("bluetoothctl untrust $deviceId");
-    exec("bluetoothctl remove $deviceId", $response);
-    
-    return $response;
+    //$response = [];
+    //
+    //exec("bluetoothctl untrust $deviceId");
+    //exec("bluetoothctl remove $deviceId", $response);
+    //
+    //return $response;
 }
 
 function devices()
 {
-    $devices = [];
+    echo "Devices";
+    exit;
 
-    exec("bluetoothctl devices", $devices);
+    //$devices = [];
 
-    return $devices;
+    //exec("bluetoothctl devices", $devices);
+
+    //return $devices;
 }
 
 function toggleScan($state)
 {
-    if ($state == true) {
-        exec("bluetoothctl scan on");
-    } else {
-        exec("bluetoothctl scan off");
-    }
-
+    echo "Toggle Scan: $state";
     exit;
+
+    //if ($state == true) {
+    //    exec("bluetoothctl scan on");
+
+    //    return "Discovery Started";
+    //} else {
+    //    exec("bluetoothctl scan off");
+
+    //    return "Discovery Stopped";
+    //}
 }
 
 ?>

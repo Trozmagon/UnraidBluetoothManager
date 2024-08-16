@@ -111,11 +111,7 @@ $btmName = 'bluetooth-manager';
             method: 'devices'
         };
 
-        $('div.spinner').show();
-
-        $.get(url, data, (response) => {
-            $('div.spinner').hide();
-
+        $.post(url, data, (response) => {
             let testhere = response;
         });
     }
@@ -129,7 +125,7 @@ $btmName = 'bluetooth-manager';
 
         $('div.spinner').show();
 
-        $.get(url, data, (response) => {
+        $.post(url, data, (response) => {
             $('div.spinner').hide();
         });
     }
