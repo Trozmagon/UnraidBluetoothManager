@@ -1,16 +1,23 @@
 <?PHP
 if (isset($_POST['method'])) {
-    $deviceId = $_POST['id'];
-
     switch ($_POST['method']) {
         case 'connect':
+            $deviceId = $_POST['id'];
+
             connect($deviceId);
             break;
         case 'disconnect':
+            $deviceId = $_POST['id'];
+
             disconnect($deviceId);
             break;
         case 'devices':
-            getDevices();
+            devices();
+            break;
+        case 'scan':
+            $state = $_POST['state'];
+
+            toggleScan($state);
             break;
     }
 }
@@ -35,7 +42,7 @@ function disconnect($deviceId)
     return $response;
 }
 
-function getDevices()
+function devices()
 {
     $devices = [];
 
@@ -43,4 +50,16 @@ function getDevices()
 
     return $devices;
 }
+
+function toggleScan($state)
+{
+    if ($state == true) {
+        exec("bluetoothctl scan on");
+    } else {
+        exec("bluetoothctl scan off");
+    }
+
+    exit;
+}
+
 ?>
