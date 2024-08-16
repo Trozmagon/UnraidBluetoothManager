@@ -17,28 +17,37 @@ exec("bluetoothctl devices", $pairedDevices);
             flex: 1;
         }
 
-    .btm-container ul {
-        list-style-type:none;
-        padding:0px;
-        margin:0px;
-    }
+        .btm-container colum {
+        }
+
+        .btm-container .title {
+            font-weight: bold;
+            font-size: 1.2em;
+            display: block;
+        }
+
+        .btm-container ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
 </style>
 
 <div class="btm-container">
     <div class="row">
         <div class="column">
             <span class="title">Paired Devices</span>
-        <ul>
-            <?php
-            foreach ($pairedDevices as $pairedDevice) {
-                $device = explode(" ", $pairedDevice);
-                $deviceId = $device[1];
-                $deviceName = join(" ", array_slice($device, 2));
+            <ul>
+                <?php
+                foreach ($pairedDevices as $pairedDevice) {
+                    $device = explode(" ", $pairedDevice);
+                    $deviceId = $device[1];
+                    $deviceName = join(" ", array_slice($device, 2));
 
-                echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . ' (' . $deviceId . ')' . '</span></li>';
-            }
-            ?>
-        </ul>
+                    echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . ' (' . $deviceId . ')' . '</span></li>';
+                }
+                ?>
+            </ul>
         </div>
     </div>
     <div class="row">
@@ -66,7 +75,15 @@ exec("bluetoothctl devices", $pairedDevices);
 
     $(function() {
         $('input[type="radio"]').on('change', (event) => {
-            $('#disconnect').show();
+            let radio = $(event.currentTarget);
+
+            if(radio.is(':checked')) {
+                radio.prop('checked', false);
+                $('#disconnect').hide();
+            }
+            else {
+                $('#disconnect').show();
+            }
         });
     });
 </script>
