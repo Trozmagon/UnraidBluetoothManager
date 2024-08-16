@@ -4,23 +4,23 @@ if (isset($_POST['method'])) {
 
     switch ($_POST['method']) {
         case 'connect':
-            connect();
+            connect($deviceId);
             break;
         case 'disconnect':
-            disconnect();
+            disconnect($deviceId);
             break;
     }
 }
 
-function connect()
+function connect($deviceId)
 {
-    echo "The connect function is called.";
+    echo "$deviceId";
     exit;
 }
 
-function disconnect()
+function disconnect($deviceId)
 {
-    echo "The disconnect function is called.";
+    echo "$deviceId";
     exit;
 }
 ?>
