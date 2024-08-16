@@ -5,6 +5,12 @@ $btmName = 'bluetooth-manager';
 $pairedDevices = [];
 
 exec("bluetoothctl devices", $pairedDevices);
+
+function disconnect($deviceId)
+{
+    return 'Boop '. $deviceId;
+}
+
 ?>
 
 <style>
@@ -62,7 +68,7 @@ exec("bluetoothctl devices", $pairedDevices);
                     $deviceId = $device[1];
                     $deviceName = join(" ", array_slice($device, 2));
 
-                    echo '<li><input type="radio" name="devices" value="' . $deviceId . '" /><span>' . $deviceName . ' (' . $deviceId . ')' . '</span></li>';
+                    echo '<li><input type="radio" name="paired" value="' . $deviceId . '" /><span>' . $deviceName . ' (' . $deviceId . ')' . '</span></li>';
                 }
                 ?>
             </ul>
@@ -75,6 +81,11 @@ exec("bluetoothctl devices", $pairedDevices);
 </div>
 
 <script>
+    function phpadd() {
+        var phpadd =  //call the php add function
+        alert(phpadd);
+    }
+
     function connect() {
         $('div.spinner').show();
 
@@ -86,13 +97,12 @@ exec("bluetoothctl devices", $pairedDevices);
     }
 
     function disconnect() {
-        let selectedDeviceId = $('input[type="radio"][name="devices"]:checked').val();
-
-        console.log(selectedDeviceId);
+        let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
+        let test = <?php disconnect(selectedDeviceId); ?>
     }
 
     $(function() {
-        $('input[type="radio"]').on('change', (event) => {
+        $('input[type="radio"]').on('click', (event) => {
             let radio = $(event.currentTarget);
 
             if(radio.hasClass('checked')) {
