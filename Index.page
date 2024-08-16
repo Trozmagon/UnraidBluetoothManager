@@ -137,10 +137,8 @@ $btmName = 'bluetooth-manager';
             method: 'scan'
         };
 
-        $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            $('div.spinner').hide();
         });
     }
 
