@@ -37,25 +37,28 @@ $btmName = 'bluetooth-manager';
                 align-items: center;
             }
 
-                .btm-container ul li button {
-                }
-
-                    .btm-container ul li button.connected svg {
-                        color: green;
-                    }
-
-                    .btm-container ul li button.disconnected svg {
-                        color: red;
-                    }
-
-                .btm-container ul li input, .btm-container ul li span {
+                .btm-container ul li input, .btm-container ul li .name {
                     margin: 3px 3px 0px 5px;
                 }
 
                 .btm-container ul li input {
                 }
 
-                .btm-container ul li span {
+                .btm-container ul li .name {
+                }
+
+                .btm-container ul li .status {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                }
+
+                .btm-container ul li.connected .status {
+                    background-color: green;
+                }
+
+                .btm-container ul li.disconnected .status {
+                    background-color: red;
                 }
 </style>
 
@@ -130,21 +133,20 @@ $btmName = 'bluetooth-manager';
         $.get(url, data, (response) => {
             let detectedDevices = JSON.parse(response);
 
-            detectedDevices.forEach((availableDevice) => {
-                let device = availableDevice.split(" ");
+            detectedDevices.forEach((detectedDevice) => {
+                let device = detectedDevice.split(" ");
                 let deviceId = device[1];
                 let deviceName = device.slice(2).join(" ");
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
                 let deviceConnected = "disconnected";
 
                 if (!deviceExists) {
-                    pairedDeviceList.append(`<li>
-                        <button class="${deviceConnected}" type="button" onclick="selectDevice(event)">
+                    pairedDeviceList.append(`
+                        <li class="${deviceConnected}" onclick="toggleDeviceSelection(event)">
                             <input type="radio" name="paired" value="${deviceId}" />
-                            <span>${deviceName} (${deviceId})</span>
-                            <i class="fa-solid fa-circle"></i>
-                        </button>
-                    </li>`);
+                            <span class="name">${deviceName} (${deviceId})</span>
+                            <span class="status"></span>
+                        </li>`);
                 }
             });
         });
@@ -161,7 +163,7 @@ $btmName = 'bluetooth-manager';
         });
     }
 
-    function selectDevice(event) {
+    function toggleDeviceSelection(event) {
         let button = $(event.currentTarget);
         let radio = button.find('input');
 
@@ -183,7 +185,9 @@ $btmName = 'bluetooth-manager';
 
     $(function () {
         enableScan();
-        //on page close disable scan
+        window.onbeforeunload = () => {
+            //on page close disable scan
+        }
 
         detectDevices();
 
