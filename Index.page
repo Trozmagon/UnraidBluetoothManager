@@ -37,6 +37,17 @@ $btmName = 'bluetooth-manager';
                 align-items: center;
             }
 
+                .btm-container ul li button {
+                }
+
+                    .btm-container ul li button.connected svg {
+                        color: green;
+                    }
+
+                    .btm-container ul li button.disconnected svg {
+                        color: red;
+                    }
+
                 .btm-container ul li input, .btm-container ul li span {
                     margin: 3px 3px 0px 5px;
                 }
@@ -52,7 +63,11 @@ $btmName = 'bluetooth-manager';
     <div class="btm-row">
         <div class="btm-column">
             <span class="btm-title">Paired Devices</span>
-            <ul id="devices"></ul>
+            <ul id="paired-devices"></ul>
+        </div>
+        <div class="btm-column">
+            <span class="btm-title">Available Devices</span>
+            <ul id="available-devices"></ul>
         </div>
     </div>
     <div class="btm-row">
@@ -68,7 +83,7 @@ $btmName = 'bluetooth-manager';
     function connect() {
         let deviceId = $('#connect-id').val();
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  {
+        let data = {
             id: deviceId,
             method: 'connect'
         };
@@ -86,7 +101,7 @@ $btmName = 'bluetooth-manager';
     function disconnect() {
         let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  {
+        let data = {
             id: selectedDeviceId,
             method: 'disconnect'
         };
@@ -94,7 +109,7 @@ $btmName = 'bluetooth-manager';
         $('div.spinner').show();
 
         $.post(url, data, (response) => {
-            if(response != null) {
+            if (response != null) {
                 $(`input[value="${response}"]`).parent().remove();
             }
 
@@ -104,26 +119,31 @@ $btmName = 'bluetooth-manager';
         });
     }
 
-    function updateAvailableDevices() {
-        let deviceList = $('#devices');
+    function detectDevices() {
+        let pairedDeviceList = $('#paired-devices');
+        let availableDeviceList = $('#available-devices');
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  {
+        let data = {
             method: 'devices'
         };
 
         $.get(url, data, (response) => {
-            let availableDevices = JSON.parse(response);
+            let detectedDevices = JSON.parse(response);
 
-            availableDevices.forEach((availableDevice) => {
+            detectedDevices.forEach((availableDevice) => {
                 let device = availableDevice.split(" ");
                 let deviceId = device[1];
                 let deviceName = device.slice(2).join(" ");
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
+                let deviceConnected = "disconnected";
 
-                if(!deviceExists) {
-                    deviceList.append(`<li>
-                        <input type="radio" name="paired" value="${deviceId}" />
-                        <span>${deviceName} (${deviceId})</span>
+                if (!deviceExists) {
+                    pairedDeviceList.append(`<li>
+                        <button class="${deviceConnected}" type="button" onclick="selectDevice(event)">
+                            <input type="radio" name="paired" value="${deviceId}" />
+                            <span>${deviceName} (${deviceId})</span>
+                            <i class="fa-solid fa-circle"></i>
+                        </button>
                     </li>`);
                 }
             });
@@ -132,43 +152,43 @@ $btmName = 'bluetooth-manager';
 
     function enableScan() {
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data =  {
+        let data = {
             state: true,
             method: 'scan'
         };
-
 
         $.get(url, data, (response) => {
         });
     }
 
-    $(function() {
+    function selectDevice(event) {
+        let button = $(event.currentTarget);
+        let radio = button.find('input');
+
+        if (radio.hasClass('checked')) {
+            $('#disconnect').hide();
+
+            radio
+                .prop('checked', false)
+                .removeClass('checked');
+        }
+        else {
+            $('#disconnect').show();
+
+            radio
+                .prop('checked', true)
+                .addClass('checked');
+        }
+    }
+
+    $(function () {
         enableScan();
         //on page close disable scan
 
-        updateAvailableDevices();
+        detectDevices();
 
         setInterval(() => {
-            updateAvailableDevices();
+            detectDevices();
         }, 3000);
-
-        $('input[type="radio"]').on('click', (event) => {
-            let radio = $(event.currentTarget);
-
-            if(radio.hasClass('checked')) {
-                $('#disconnect').hide();
-
-                radio
-                    .prop('checked', false)
-                    .removeClass('checked');
-            }
-            else {
-                $('#disconnect').show();
-
-                radio
-                    .prop('checked', true)
-                    .addClass('checked');
-            }
-        });
     });
 </script>

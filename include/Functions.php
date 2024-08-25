@@ -34,8 +34,6 @@ else if (isset($_GET['method'])) {
 
 function connect($deviceId)
 {
-    $response = "";
-
     exec("bluetoothctl pair $deviceId");
     exec("bluetoothctl trust $deviceId");
     exec("bluetoothctl connect $deviceId", $response);
@@ -46,8 +44,6 @@ function connect($deviceId)
 
 function disconnect($deviceId)
 {
-    $response = "";
-    
     exec("bluetoothctl untrust $deviceId");
     exec("bluetoothctl remove $deviceId", $response);
     
@@ -57,8 +53,6 @@ function disconnect($deviceId)
 
 function getDeviceInfo($deviceId)
 {
-    $deviceInfo = "";
-
     exec("bluetoothctl info $deviceId", $deviceInfo);
 
     echo $deviceInfo;
@@ -67,8 +61,6 @@ function getDeviceInfo($deviceId)
 
 function devices()
 {
-    $devices = [];
-
     exec("bluetoothctl devices", $devices);
 
     echo json_encode($devices);
