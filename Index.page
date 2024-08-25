@@ -155,7 +155,7 @@ $btmName = 'bluetooth-manager';
                         let deviceStatus = "disconnected";
 
                         pairedDeviceList.append(`
-                            <li class="${deviceConnected}" onclick="toggleDeviceSelection(event)">
+                            <li class="${deviceStatus}" onclick="toggleDeviceSelection(event)">
                                 <span class="status"></span>
                                 <input type="radio" name="paired" value="${deviceId}" />
                                 <span class="name">${deviceName} (${deviceId})</span>

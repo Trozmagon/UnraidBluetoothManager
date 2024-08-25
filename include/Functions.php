@@ -55,7 +55,7 @@ function getDeviceInfo($deviceId)
 {
     exec("bluetoothctl info $deviceId", $deviceInfo);
 
-    echo $deviceInfo;
+    echo json_encode($deviceInfo);
     exit;
 }
 
