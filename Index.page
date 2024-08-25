@@ -13,12 +13,11 @@ $btmName = 'bluetooth-manager';
     }
 
         .btm-container .btm-row {
-            display:flex;
+            display: flex;
             flex: 1;
         }
 
         .btm-container .btm-colum {
-            
         }
 
         .btm-container .btm-title {
@@ -37,7 +36,7 @@ $btmName = 'bluetooth-manager';
                 display: flex;
                 justify-content: start;
                 align-items: center;
-                cursor:pointer
+                cursor: pointer
             }
 
                 .btm-container ul li input, .btm-container ul li .name {
@@ -131,12 +130,12 @@ $btmName = 'bluetooth-manager';
     function detectDevices() {
         let pairedDeviceList = $('#paired-devices');
         let availableDeviceList = $('#available-devices');
-        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data = {
+        let detectDevicesUrl = '/plugins/<?= $btmName ?>/include/Functions.php'
+        let detectDevicesRequest = {
             method: 'devices'
         };
 
-        $.get(url, data, (response) => {
+        $.get(detectedDevicesUrl, detectedDevicesRequest, (response) => {
             let detectedDevices = JSON.parse(response);
 
             detectedDevices.forEach((detectedDevice) => {
@@ -144,15 +143,24 @@ $btmName = 'bluetooth-manager';
                 let deviceId = device[1];
                 let deviceName = device.slice(2).join(" ");
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
-                let deviceConnected = "disconnected";
 
                 if (!deviceExists) {
-                    pairedDeviceList.append(`
-                        <li class="${deviceConnected}" onclick="toggleDeviceSelection(event)">
-                            <span class="status"></span>
-                            <input type="radio" name="paired" value="${deviceId}" />
-                            <span class="name">${deviceName} (${deviceId})</span>
-                        </li>`);
+                    let deviceInfoUrl = '/plugins/<?= $btmName ?>/include/Functions.php'
+                    let deviceInfoRequest = {
+                        id: deviceId,
+                        method: 'deviceinfo'
+                    };
+
+                    $.get(deviceInfoUrl, deviceInfoRequest, (response) => {
+                        let deviceStatus = "disconnected";
+
+                        pairedDeviceList.append(`
+                            <li class="${deviceConnected}" onclick="toggleDeviceSelection(event)">
+                                <span class="status"></span>
+                                <input type="radio" name="paired" value="${deviceId}" />
+                                <span class="name">${deviceName} (${deviceId})</span>
+                            </li>`);
+                    });
                 }
             });
         });
