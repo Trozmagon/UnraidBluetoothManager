@@ -153,9 +153,9 @@ $btmName = 'bluetooth-manager';
 
                     $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
                         let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
-                        let connected = searchDeviceInfo('connected', deviceInfo);
-                        let paired = searchDeviceInfo('paired', deviceInfo);
-                        let trusted = searchDeviceInfo('trusted', deviceInfo);
+                        let connected = searchDeviceInfo('Connected', deviceInfo);
+                        let paired = searchDeviceInfo('Paired', deviceInfo);
+                        let trusted = searchDeviceInfo('Trusted', deviceInfo);
 
                         if(paired) {
                             pairedDeviceList.append(`
@@ -181,7 +181,7 @@ $btmName = 'bluetooth-manager';
     function searchDeviceInfo(value, deviceInfo) {
         for (var i = 0; i < deviceInfo.length; i++) {
             if (deviceInfo[i].match(value)){
-                return i.split(': ')[1] == "yes";
+                return deviceInfo[i].split(': ')[1] == "yes";
             }
         }
         return -1;
