@@ -11,18 +11,17 @@ if (isset($_POST['method'])) {
 
             disconnect($deviceId);
             break;
+        case 'deviceinfo':
+            $deviceId = $_POST['id'];
+
+            getDeviceInfo($deviceId);
+            break;
     }
 }
 else if (isset($_GET['method'])) {
     switch ($_GET['method']) {
         case 'devices':
             devices();
-            break;
-        case 'deviceinfo':
-            $url = parse_url($_SERVER['REQUEST_URI']);
-            parse_str($url['id'], $query);
-
-            getDeviceInfo($query['id']);
             break;
         case 'scan':
             $state = $_POST['state'];
