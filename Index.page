@@ -153,9 +153,9 @@ $btmName = 'bluetooth-manager';
 
                     $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
                         let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
-                        let connected = deviceInfo[8].split(': ')[1];
-                        let paired = deviceInfo[5].split(': ')[1];
-                        let trusted = deviceInfo[6].split(': ')[1];
+                        let connected = deviceInfo[8].split(': ')[1] == "yes";
+                        let paired = deviceInfo[5].split(': ')[1] == "yes";
+                        let trusted = deviceInfo[6].split(': ')[1] == "yes";
                         let deviceStatus = connected ? 'connected' : 'disconnected';
 
                         if(paired) {
