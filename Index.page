@@ -135,7 +135,7 @@ $btmName = 'bluetooth-manager';
             method: 'devices'
         };
 
-        $.get(detectedDevicesUrl, detectedDevicesRequest, (response) => {
+        $.get(detectDevicesUrl, detectDevicesRequest, (response) => {
             let detectedDevices = JSON.parse(response);
 
             detectedDevices.forEach((detectedDevice) => {
