@@ -153,14 +153,13 @@ $btmName = 'bluetooth-manager';
 
                     $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
                         let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
-                        let connected = deviceInfo[8].split(': ')[1] == "yes";
-                        let paired = deviceInfo[5].split(': ')[1] == "yes";
-                        let trusted = deviceInfo[6].split(': ')[1] == "yes";
-                        let deviceStatus = connected ? 'connected' : 'disconnected';
+                        let connected = searchDeviceInfo('connected', deviceInfo);
+                        let paired = searchDeviceInfo('paired', deviceInfo);
+                        let trusted = searchDeviceInfo('trusted', deviceInfo);
 
                         if(paired) {
                             pairedDeviceList.append(`
-                                <li class="${deviceStatus}" onclick="toggleDeviceSelection(event)">
+                                <li class="${connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
                                     <span class="status"></span>
                                     <input type="radio" name="paired" value="${deviceId}" />
                                     <span class="name">${deviceName} (${deviceId})</span>
@@ -177,6 +176,15 @@ $btmName = 'bluetooth-manager';
                 }
             });
         });
+    }
+
+    function searchDeviceInfo(value, deviceInfo) {
+        for (var i = 0; i < deviceInfo.length; i++) {
+            if (deviceInfo[i].match(value)){
+                return i.split(': ')[1] == "yes";
+            }
+        }
+        return -1;
     }
 
     function enableScan() {
