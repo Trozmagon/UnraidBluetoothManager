@@ -88,9 +88,10 @@ $btmName = 'bluetooth-manager';
 </div>
 
 <script>
+    let functions = '/plugins/<?= $btmName ?>/include/Functions.php'
+
     function connect() {
         let deviceId = $('#connect-id').val();
-        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
         let data = {
             id: deviceId,
             method: 'connect'
@@ -98,7 +99,7 @@ $btmName = 'bluetooth-manager';
 
         $('div.spinner').show();
 
-        $.post(url, data, (response) => {
+        $.post(functions, data, (response) => {
 
             alert(`${response}`);
 
@@ -108,7 +109,6 @@ $btmName = 'bluetooth-manager';
 
     function disconnect() {
         let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
-        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
         let data = {
             id: selectedDeviceId,
             method: 'disconnect'
@@ -116,7 +116,7 @@ $btmName = 'bluetooth-manager';
 
         $('div.spinner').show();
 
-        $.post(url, data, (response) => {
+        $.post(functions, data, (response) => {
             if (response != null) {
                 $(`input[value="${response}"]`).parent().remove();
             }
@@ -130,29 +130,27 @@ $btmName = 'bluetooth-manager';
     function detectDevices() {
         let pairedDeviceList = $('#paired-devices');
         let availableDeviceList = $('#available-devices');
-        let detectDevicesUrl = '/plugins/<?= $btmName ?>/include/Functions.php'
         let detectDevicesRequest = {
             method: 'devices'
         };
 
-        $.get(detectDevicesUrl, detectDevicesRequest, (response) => {
+        $.get(functions, detectDevicesRequest, (response) => {
             let detectedDevices = JSON.parse(response);
 
             detectedDevices.forEach((detectedDevice) => {
                 let device = detectedDevice.split(" ");
                 let deviceId = device[1];
-                let deviceName = device.slice(2).join(" ");
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
 
                 if (!deviceExists) {
-                    let deviceInfoUrl = '/plugins/<?= $btmName ?>/include/Functions.php'
                     let deviceInfoRequest = {
                         id: deviceId,
                         method: 'deviceinfo'
                     };
 
-                    $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
+                    $.post(functions, deviceInfoRequest, (response) => {
                         let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
+                        let deviceName = device.slice(2).join(" ");
                         let connected = searchDeviceInfo('Connected', deviceInfo);
                         let paired = searchDeviceInfo('Paired', deviceInfo);
                         let trusted = searchDeviceInfo('Trusted', deviceInfo);
@@ -188,13 +186,14 @@ $btmName = 'bluetooth-manager';
     }
 
     function enableScan() {
-        let url = '/plugins/<?= $btmName ?>/include/Functions.php'
-        let data = {
+        $.get(url, data = {
             method: 'startscan'
-        };
+        });
+    }
 
-        $.get(url, data, (response) => {
-            console.log('scanning');
+    function disableScan() {
+        $.get(functions, {
+            method: 'stopscan'
         });
     }
 
@@ -221,7 +220,7 @@ $btmName = 'bluetooth-manager';
     $(function () {
         enableScan();
         window.onbeforeunload = () => {
-            //on page close disable scan
+            disableScan();
         }
 
         detectDevices();
