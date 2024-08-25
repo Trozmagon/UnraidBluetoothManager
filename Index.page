@@ -152,14 +152,27 @@ $btmName = 'bluetooth-manager';
                     };
 
                     $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
-                        let deviceStatus = "disconnected";
+                        let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
+                        let connected = deviceInfo[8].split(': ')[1];
+                        let paired = deviceInfo[5].split(': ')[1];
+                        let trusted = deviceInfo[6].split(': ')[1];
+                        let deviceStatus = connected ? 'connected' : 'disconnected';
 
-                        pairedDeviceList.append(`
-                            <li class="${deviceStatus}" onclick="toggleDeviceSelection(event)">
-                                <span class="status"></span>
-                                <input type="radio" name="paired" value="${deviceId}" />
-                                <span class="name">${deviceName} (${deviceId})</span>
-                            </li>`);
+                        if(paired) {
+                            pairedDeviceList.append(`
+                                <li class="${deviceStatus}" onclick="toggleDeviceSelection(event)">
+                                    <span class="status"></span>
+                                    <input type="radio" name="paired" value="${deviceId}" />
+                                    <span class="name">${deviceName} (${deviceId})</span>
+                                </li>`);
+                        }
+                        else {
+                            availableDeviceList.append(`
+                                <li onclick="toggleDeviceSelection(event)">
+                                    <input type="radio" name="paired" value="${deviceId}" />
+                                    <span class="name">${deviceName} (${deviceId})</span>
+                                </li>`);
+                        }
                     });
                 }
             });
