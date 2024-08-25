@@ -151,7 +151,7 @@ $btmName = 'bluetooth-manager';
                         method: 'deviceinfo'
                     };
 
-                    $.get(deviceInfoUrl, deviceInfoRequest, (response) => {
+                    $.post(deviceInfoUrl, deviceInfoRequest, (response) => {
                         let deviceStatus = "disconnected";
 
                         pairedDeviceList.append(`
