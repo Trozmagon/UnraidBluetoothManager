@@ -2,19 +2,13 @@
 if (isset($_POST['method'])) {
     switch ($_POST['method']) {
         case 'connect':
-            $deviceId = $_POST['id'];
-
-            connect($deviceId);
+            connect($_POST['id']);
             break;
         case 'disconnect':
-            $deviceId = $_POST['id'];
-
-            disconnect($deviceId);
+            disconnect($_POST['id']);
             break;
         case 'deviceinfo':
-            $deviceId = $_POST['id'];
-
-            getDeviceInfo($deviceId);
+            getDeviceInfo($_POST['id']);
             break;
     }
 }
@@ -24,7 +18,10 @@ else if (isset($_GET['method'])) {
             devices();
             break;
         case 'startscan':
-            toggleScan($state);
+            enableScan();
+            break;
+        case 'stopscan':
+            disableScan();
             break;
     }
 }
@@ -64,16 +61,19 @@ function devices()
     exit;
 }
 
-function toggleScan($state)
+function enableScan()
 {
-    if ($state == true) {
-        exec("bluetoothctl scan on");
-        echo "Toggle Scan: On";
-    } else {
-        exec("bluetoothctl scan off");
-        echo "Toggle Scan: Off";
-    }
+    exec("bluetoothctl scan on");
 
+    echo "Toggle Scan: On";
+    exit;
+}
+
+function disableScan()
+{
+    exec("bluetoothctl scan off");
+
+    echo "Toggle Scan: Off";
     exit;
 }
 
