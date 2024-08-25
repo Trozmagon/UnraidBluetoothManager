@@ -12,11 +12,13 @@ $btmName = 'bluetooth-manager';
         flex-direction: column;
     }
 
-        .btm-container btm-row {
+        .btm-container .btm-row {
+            display:flex;
             flex: 1;
         }
 
-        .btm-container btm-colum {
+        .btm-container .btm-colum {
+            
         }
 
         .btm-container .btm-title {
@@ -35,6 +37,7 @@ $btmName = 'bluetooth-manager';
                 display: flex;
                 justify-content: start;
                 align-items: center;
+                cursor:pointer
             }
 
                 .btm-container ul li input, .btm-container ul li .name {
@@ -45,12 +48,15 @@ $btmName = 'bluetooth-manager';
                 }
 
                 .btm-container ul li .name {
+                    flex: 1;
                 }
 
                 .btm-container ul li .status {
-                    width: 16px;
-                    height: 16px;
+                    width: 11px;
+                    height: 11px;
                     border-radius: 50%;
+                    margin: 3px 3px 0px 5px;
+                    padding: 0px;
                 }
 
                 .btm-container ul li.connected .status {
@@ -143,9 +149,9 @@ $btmName = 'bluetooth-manager';
                 if (!deviceExists) {
                     pairedDeviceList.append(`
                         <li class="${deviceConnected}" onclick="toggleDeviceSelection(event)">
+                            <span class="status"></span>
                             <input type="radio" name="paired" value="${deviceId}" />
                             <span class="name">${deviceName} (${deviceId})</span>
-                            <span class="status"></span>
                         </li>`);
                 }
             });
