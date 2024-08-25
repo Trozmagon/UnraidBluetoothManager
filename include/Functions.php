@@ -23,9 +23,7 @@ else if (isset($_GET['method'])) {
         case 'devices':
             devices();
             break;
-        case 'scan':
-            $state = $_POST['state'];
-
+        case 'startscan':
             toggleScan($state);
             break;
     }

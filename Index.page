@@ -182,11 +182,11 @@ $btmName = 'bluetooth-manager';
     function enableScan() {
         let url = '/plugins/<?= $btmName ?>/include/Functions.php'
         let data = {
-            state: true,
-            method: 'scan'
+            method: 'startscan'
         };
 
         $.get(url, data, (response) => {
+            console.log('scanning');
         });
     }
 
