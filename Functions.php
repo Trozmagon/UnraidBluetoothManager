@@ -65,7 +65,7 @@ function devices()
 
 function startScan()
 {
-    exec("bluetoothctl scan on", $result);
+    exec("bluetoothctl scan on" . " > /dev/null &");
 
     echo "Toggle Scan: On";
     exit;
@@ -73,7 +73,7 @@ function startScan()
 
 function stopScan()
 {
-    exec("bluetoothctl scan off", $result);
+    exec("bluetoothctl scan off" . " > /dev/null &");
 
     echo "Toggle Scan: Off";
     exit;
