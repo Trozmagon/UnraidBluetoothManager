@@ -70,6 +70,11 @@ $btmName = 'bluetooth-manager';
 <div class="btm-container">
     <div class="btm-row">
         <div class="btm-column">
+            <ul class="message-panel"></ul>
+        </div>
+     </div>
+    <div class="btm-row">
+        <div class="btm-column">
             <span class="btm-title">Paired Devices</span>
             <ul id="paired-devices"></ul>
         </div>
@@ -186,18 +191,14 @@ $btmName = 'bluetooth-manager';
     }
 
     function enableScan() {
-        console.groupCollapsed("Result: Bluetooth Manager");
-
         $.get(functions, { method: 'startscan' }, (response) => {
-            console.log(response);
+            logEvent(response);
         });
     }
 
     function disableScan() {
         $.get(functions, { method: 'stopscan' }, (response) => {
-            console.log(response);
-
-            console.groupEnd();
+            logEvent(response);
         });
     }
 
@@ -219,6 +220,15 @@ $btmName = 'bluetooth-manager';
                 .prop('checked', true)
                 .addClass('checked');
         }
+    }
+
+    function logEvent(message) {
+        let timestamp = new Date().toLocaleString().replace(',', '');
+
+        $('#message-panel').append(`<li>
+            <span class="timestamp">${timestamp}</span>
+            <span class="message">${message}</span>
+        </li>`);
     }
 
     $(function () {
