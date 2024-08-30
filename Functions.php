@@ -12,7 +12,8 @@ if (isset($_POST['method'])) {
             break;
     }
 }
-else if (isset($_GET['method'])) {
+
+if (isset($_GET['method'])) {
     switch ($_GET['method']) {
         case 'devices':
             devices();

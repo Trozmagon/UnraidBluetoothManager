@@ -73,6 +73,9 @@ $btmName = 'bluetooth-manager';
             <ul id="message-panel"></ul>
         </div>
      </div>
+    <button type="button" onclick="enableScan();">Start Scan</button>
+    <button type="button" onclick="disableScan();">Stop Scan</button>
+    <button type="button" onclick="detectDevices();">Get Devices</button>
     <div class="btm-row">
         <div class="btm-column">
             <span class="btm-title">Paired Devices</span>
@@ -232,15 +235,15 @@ $btmName = 'bluetooth-manager';
     }
 
     $(function () {
-        enableScan();
-        window.onbeforeunload = () => {
-            disableScan();
-        }
+        //enableScan();
+        //window.onbeforeunload = () => {
+        //    disableScan();
+        //}
 
-        detectDevices();
-
-        setInterval(() => {
-            detectDevices();
-        }, 3000);
+        //detectDevices();
+        //
+        //setInterval(() => {
+        //    detectDevices();
+        //}, 3000);
     });
 </script>
