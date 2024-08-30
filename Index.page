@@ -186,7 +186,7 @@ $btmName = 'bluetooth-manager';
     }
 
     function enableScan() {
-        $.get(url, data = {
+        $.get(functions, {
             method: 'startscan'
         });
     }
