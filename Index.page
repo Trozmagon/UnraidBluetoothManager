@@ -17,13 +17,22 @@ $btmName = 'bluetooth-manager';
             flex: 1;
         }
 
-        .btm-container .btm-colum {
-        }
+            .btm-container .btm-row .btm-colum:first-of-type {
+                margin-left: 0px;
+            }
+
+            .btm-container .btm-row .btm-colum {
+                flex: 1;
+                border: 1px solid #e3e3e3;
+                padding: 10px;
+                margin: 0px 5px;
+            }
 
         .btm-container .btm-title {
             font-weight: bold;
             font-size: 1.2em;
             display: block;
+            margin-bottom: 10px;
         }
 
         .btm-container ul {
@@ -70,12 +79,20 @@ $btmName = 'bluetooth-manager';
 <div class="btm-container">
     <div class="btm-row">
         <div class="btm-column">
+            <button type="button" onclick="enableScan();">Start Scan</button>
+        </div>
+        <div class="btm-column">
+            <button type="button" onclick="disableScan();">Stop Scan</button>
+        </div>
+        <div class="btm-column">
+            <button type="button" onclick="detectDevices();">Get Devices</button>
+        </div>
+    </div>
+    <div class="btm-row">
+        <div class="btm-column">
             <ul id="message-panel"></ul>
         </div>
-     </div>
-    <button type="button" onclick="enableScan();">Start Scan</button>
-    <button type="button" onclick="disableScan();">Stop Scan</button>
-    <button type="button" onclick="detectDevices();">Get Devices</button>
+    </div>
     <div class="btm-row">
         <div class="btm-column">
             <span class="btm-title">Paired Devices</span>
@@ -163,7 +180,7 @@ $btmName = 'bluetooth-manager';
                         let paired = searchDeviceInfo('Paired', deviceInfo);
                         let trusted = searchDeviceInfo('Trusted', deviceInfo);
 
-                        if(paired) {
+                        if (paired) {
                             pairedDeviceList.append(`
                                 <li class="${connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
                                     <span class="status"></span>
@@ -186,7 +203,7 @@ $btmName = 'bluetooth-manager';
 
     function searchDeviceInfo(value, deviceInfo) {
         for (var i = 0; i < deviceInfo.length; i++) {
-            if (deviceInfo[i].match(value)){
+            if (deviceInfo[i].match(value)) {
                 return deviceInfo[i].split(': ')[1] == "yes";
             }
         }
