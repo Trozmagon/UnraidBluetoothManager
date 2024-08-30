@@ -19,10 +19,10 @@ if (isset($_GET['method'])) {
             devices();
             break;
         case 'startscan':
-            enableScan();
+            startScan();
             break;
         case 'stopscan':
-            disableScan();
+            stopScan();
             break;
     }
 }
@@ -63,17 +63,17 @@ function devices()
     exit;
 }
 
-function enableScan()
+function startScan()
 {
-    exec("bluetoothctl scan on");
+    exec("bluetoothctl scan on", $result);
 
-    echo json_encode("Toggle Scan: On");
+    echo "Toggle Scan: On";
     exit;
 }
 
-function disableScan()
+function stopScan()
 {
-    exec("bluetoothctl scan off");
+    exec("bluetoothctl scan off", $result);
 
     echo "Toggle Scan: Off";
     exit;
