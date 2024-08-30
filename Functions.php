@@ -67,7 +67,7 @@ function enableScan()
 {
     exec("bluetoothctl scan on");
 
-    echo "Toggle Scan: On";
+    echo json_encode("Toggle Scan: On");
     exit;
 }
 
