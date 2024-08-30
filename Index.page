@@ -186,14 +186,18 @@ $btmName = 'bluetooth-manager';
     }
 
     function enableScan() {
-        $.get(functions, {
-            method: 'startscan'
+        console.groupCollapsed("Result: Bluetooth Manager");
+
+        $.get(functions, { method: 'startscan' }, (response) => {
+            console.log(response);
         });
     }
 
     function disableScan() {
-        $.get(functions, {
-            method: 'stopscan'
+        $.get(functions, { method: 'stopscan' }, (response) => {
+            console.log(response);
+
+            console.groupEnd();
         });
     }
 
