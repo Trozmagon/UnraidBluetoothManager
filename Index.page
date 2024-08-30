@@ -70,7 +70,7 @@ $btmName = 'bluetooth-manager';
 <div class="btm-container">
     <div class="btm-row">
         <div class="btm-column">
-            <ul class="message-panel"></ul>
+            <ul id="message-panel"></ul>
         </div>
      </div>
     <div class="btm-row">
