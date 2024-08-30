@@ -32,16 +32,17 @@ function connect($deviceId)
     exec("bluetoothctl trust $deviceId");
     exec("bluetoothctl connect $deviceId", $response);
 
-    echo $response;
+    echo json_encode($response);
     exit;
 }
 
 function disconnect($deviceId)
 {
+    exec("bluetoothctl unpair $deviceId");
     exec("bluetoothctl untrust $deviceId");
     exec("bluetoothctl remove $deviceId", $response);
     
-    echo $response;
+    echo json_encode($response);
     exit;
 }
 
