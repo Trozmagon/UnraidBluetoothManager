@@ -32,8 +32,8 @@
 		<URL>https://raw.githubusercontent.com/&author;/&name;/main/Index.page</URL>
 	</FILE>
 
-	<FILE Name="&emhttp;/include/Functions.php">
-		<URL>https://raw.githubusercontent.com/&author;/&name;/main/include/Functions.php</URL>
+	<FILE Name="&emhttp;/Functions.php">
+		<URL>https://raw.githubusercontent.com/&author;/&name;/main/Functions.php</URL>
 	</FILE>
 
 	<!-- Install Script Start -->
