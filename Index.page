@@ -232,7 +232,7 @@ $btmName = 'UnraidBluetoothManager';
             method: 'startscan'
         };
 
-        window.localStorage.setItem('bluetooth-devices', []);
+        window.localStorage.setItem('bluetooth-devices', JSON.stringify([]));
 
         $.get(functions, scanRequest, (response) => {
             logEvent(response);
@@ -246,7 +246,7 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function disableScan() {
-        window.localStorage.setItem('bluetooth-devices', []);
+        window.localStorage.setItem('bluetooth-devices', JSON.stringify([]));
 
         $.get(functions, { method: 'stopscan' }, (response) => {
             logEvent(response);
