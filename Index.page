@@ -208,6 +208,7 @@ $btmName = 'UnraidBluetoothManager';
                 }
             });
 
+            window.localStorage.setItem('bluetooth-devices', JSON.stringify(availableDevices));
             //startExistingDeviceIds.forEach((startExistingDeviceId) => {
             //    if (!existingDeviceIds.includes(startExistingDeviceId)) {
             //        let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
