@@ -176,7 +176,7 @@ $btmName = 'UnraidBluetoothManager';
                         trusted: searchDeviceInfo('Trusted', deviceInfo)
                     });
 
-                    if (i == physicalDevices.length) {
+                    if (i == physicalDevices.length - 1) {
                         renderAvailableDevices(availableDevices);
 
                         setTimeout(() => {
