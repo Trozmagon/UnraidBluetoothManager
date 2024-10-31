@@ -68,6 +68,7 @@ $btmName = 'UnraidBluetoothManager';
 
         button.accordion-button:hover {
             background: rgba(0, 0, 0, 0.1);
+            color: rgba(28, 27, 27, 1.0);
         }
 
         button.accordion-button > i:first-of-type {
@@ -215,7 +216,8 @@ $btmName = 'UnraidBluetoothManager';
                         <input type="hidden" name="paired" value="${availableDevice.id}" />
                         <button class="accordion-button" type="button" onclick="toggleDetails(event)">
                             <i class="fa ${availableDevice.icon}"></i>
-                            ${availableDevice.name}
+                            <span class="device-name">${availableDevice.name}</span>
+                            <span class="device-mac">${availableDevice.id}</span>
                             <i class="fa fa-chevron-down"></i>
                         </button>
                         <div class="accordion-options">
