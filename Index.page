@@ -159,7 +159,9 @@ $btmName = 'UnraidBluetoothManager';
 
         $.get(functions, { method: 'devices' }, (response) => {
             const detectedDevices = JSON.parse(response);
-            const physicalDevices = detectedDevices.filter(device => !macRegex.test(device.split(" ").slice(2).join(" ")));
+            const physicalDevices = detectedDevices.filter(device => !macRegex.test(device.split(" ").slice(2).join(" "))).sort();
+
+            let deviceCount = 0;
 
             for (let i = 0; i < physicalDevices.length; i++) {
                 const device = physicalDevices[i].split(" ");
@@ -176,7 +178,9 @@ $btmName = 'UnraidBluetoothManager';
                         trusted: searchDeviceInfo('Trusted', deviceInfo)
                     });
 
-                    if (i == physicalDevices.length - 1) {
+                    ++deviceCount;
+
+                    if (deviceCount == physicalDevices.length - 1) {
                         renderAvailableDevices(availableDevices);
 
                         setTimeout(() => {
@@ -191,7 +195,7 @@ $btmName = 'UnraidBluetoothManager';
     function renderAvailableDevices(availableDevices) {
         const availableDeviceIds = availableDevices.map((device) => { return device.id; });
         const renderedDeviceIds = getRenderedDeviceIds();
-
+        
         for (let i = 0; i < availableDevices.length; i++) {
             const availableDevice = availableDevices[i];
             const rendered = renderedDeviceIds.includes(availableDevice.id)
