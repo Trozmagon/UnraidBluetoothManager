@@ -77,7 +77,7 @@ $btmName = 'UnraidBluetoothManager';
 </style>
 
 <div class="btm-container">
-    <div class="btm-row">
+    <!--<div class="btm-row">
         <div class="btm-column">
             <button type="button" onclick="enableScan();">Start Scan</button>
         </div>
@@ -87,7 +87,7 @@ $btmName = 'UnraidBluetoothManager';
         <div class="btm-column">
             <button type="button" onclick="detectDevices();">Get Devices</button>
         </div>
-    </div>
+    </div>-->
     <div class="btm-row">
         <div class="btm-column">
             <ul id="message-panel"></ul>
@@ -216,8 +216,13 @@ $btmName = 'UnraidBluetoothManager';
         };
 
         $.get(functions, scanRequest, (response) => {
-            var test = response;
-            //logEvent(response);
+            logEvent(response);
+
+            detectDevices();
+
+            setInterval(() => {
+                detectDevices();
+            }, 3000);
         });
     }
 
@@ -257,15 +262,10 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     $(function () {
-        //enableScan();
-        //window.onbeforeunload = () => {
-        //    disableScan();
-        //}
+        enableScan();
 
-        //detectDevices();
-        //
-        //setInterval(() => {
-        //    detectDevices();
-        //}, 3000);
+        window.onbeforeunload = () => {
+            disableScan();
+        }
     });
 </script>
