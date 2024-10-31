@@ -155,72 +155,75 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function detectDevices() {
-        let pairedDeviceList = $('#paired-devices');
-        let availableDeviceList = $('#available-devices');
         let availableDevices = [];
-        let renderedDevices = $('#available-devices li input').map((index, input) => { return input.value; }).get();
 
-        let detectDevicesRequest = {
-            method: 'devices'
-        };
-
-        $.get(functions, detectDevicesRequest, (response) => {
-            let detectedDevices = JSON.parse(response);
+        $.get(functions, { method: 'devices' }, (response) => {
+            const detectedDevices = JSON.parse(response);
 
             for (let i = 0; i < detectedDevices.length; i++) {
-                let detectedDevice = detectedDevices[i];
+                const device = detectedDevices[i].split(" ");
+                const deviceId = device[1];
+                const physicalDevice = !macRegex.test(device.slice(2).join(" "));
 
-                let device = detectedDevice.split(" ");
-                let deviceId = device[1];
-                let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
-                let hasName = macRegex.test(device.slice(2).join(" "));
+                if (physicalDevice) {
+                    $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
+                        const deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
 
-                if (!hasName) {
-                    if (!deviceExists) {
-                        let deviceInfoRequest = {
+                        availableDevices.push({
                             id: deviceId,
-                            method: 'deviceinfo'
-                        };
-
-                        $.post(functions, deviceInfoRequest, (response) => {
-                            let deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
-                            let deviceName = device.slice(2).join(" ");
-                            let connected = searchDeviceInfo('Connected', deviceInfo);
-                            let paired = searchDeviceInfo('Paired', deviceInfo);
-                            let trusted = searchDeviceInfo('Trusted', deviceInfo);
-
-                            if (paired) {
-                                pairedDeviceList.append(`
-                                <li class="${connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
-                                    <span class="status"></span>
-                                    <input type="radio" name="paired" value="${deviceId}" />
-                                    <span class="name">${deviceName} (${deviceId})</span>
-                                </li>`);
-                            }
-                            else {
-                                availableDeviceList.append(`
-                                <li onclick="toggleDeviceSelection(event)">
-                                    <input type="radio" name="paired" value="${deviceId}" />
-                                    <span class="name">${deviceName} (${deviceId})</span>
-                                </li>`);
-                            }
+                            name: device.slice(2).join(" "),
+                            connected: searchDeviceInfo('Connected', deviceInfo),
+                            paired: searchDeviceInfo('Paired', deviceInfo),
+                            trusted: searchDeviceInfo('Trusted', deviceInfo)
                         });
 
-                        availableDevices.push(deviceId);
-                    }
-                }
-            }
+                        if (i == detectedDevices.length) {
+                            renderAvailableDevices(availableDevices);
 
-            for (let i = 0; i < availableDevices.length; i++) {
-                let availableDeviceId = availableDevices[0];
-
-                if (!renderedDevices.includes(availableDeviceId)) {
-                    let listItem = $(`#available-devices li [input="${availableDeviceId}"]`).parent();
-
-                    availableDeviceList.remove(listItem)
+                            setTimeout(() => {
+                                detectDevices();
+                            }, pollTime);
+                        }
+                    });
                 }
             }
         });
+    }
+
+    function renderAvailableDevices(availableDevices) {
+        const renderedDeviceIds = $('#available-devices li input').map((i, input) => { return input.value; }).get();
+        const availableDeviceIds = availableDevices.map((i, device) => { return device.id; }).get();
+        const unavailableDeviceIds = renderedDeviceIds.filter(id => !availableDeviceIds.includes(id));
+
+        for (let i = 0; i < unavailableDeviceIds.length; i++) {
+            const unavailableDeviceId = unavailableDeviceIds[i];
+
+            $(`#available-devices input[value="${unavailableDeviceId}"]`).parent().remove();
+        }
+
+        for (let i = 0; i < availableDevices.length; i++) {
+            const availableDevice = availableDevices[i];
+            const rendered = renderedDeviceIds.includes(availableDevice.id)
+
+            if (!rendered) {
+                const list = $('#available-devices');
+
+                if (paired) {
+                    list.append(`<li class="${availableDevice.connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
+                        <span class="status"></span>
+                        <input type="radio" name="paired" value="${availableDevice.id}" />
+                        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
+                    </li>`);
+                }
+                else {
+                    list.append(`<li onclick="toggleDeviceSelection(event)">
+                        <input type="radio" name="paired" value="${availableDevice.id}" />
+                        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
+                    </li>`);
+                }
+            }
+
+        }
     }
 
     function searchDeviceInfo(value, deviceInfo) {
@@ -233,18 +236,10 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function enableScan() {
-        let scanRequest = {
-            method: 'startscan'
-        };
-
-        $.get(functions, scanRequest, (response) => {
+        $.get(functions, { method: 'startscan' }, (response) => {
             logEvent(response);
 
             detectDevices();
-
-            setInterval(() => {
-                detectDevices();
-            }, pollTime);
         });
     }
 
