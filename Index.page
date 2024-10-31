@@ -28,12 +28,17 @@ $btmName = 'UnraidBluetoothManager';
                 margin: 0px 5px;
             }
 
-        .btm-container .btm-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            display: block;
-            margin-bottom: 10px;
-        }
+            .btm-container .btm-row .btm-spacer {
+                flex: 0.5;
+                border:none;
+            }
+
+            .btm-container .btm-title {
+                font-weight: bold;
+                font-size: 1.2em;
+                display: block;
+                margin-bottom: 10px;
+            }
 
         .btm-container ul {
             list-style-type: none;
@@ -119,14 +124,14 @@ $btmName = 'UnraidBluetoothManager';
         </div>
     </div>
     <div class="btm-row">
-        <div class="btm-column"></div>
+        <div class="btm-spacer"></div>
         <div class="btm-column">
             <span class="btm-title">Paired Devices</span>
             <ul class="accordion" id="paired-devices"></ul>
             <span class="btm-title">Available Devices</span>
             <ul class="accordion" id="available-devices"></ul>
         </div>
-        <div class="btm-column"></div>
+        <div class="btm-spacer"></div>
     </div>
     <!--<div class="btm-row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
