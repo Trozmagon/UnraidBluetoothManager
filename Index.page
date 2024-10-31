@@ -159,33 +159,31 @@ $btmName = 'UnraidBluetoothManager';
 
         $.get(functions, { method: 'devices' }, (response) => {
             const detectedDevices = JSON.parse(response);
+            const physicalDevices = detectedDevices.filter(device => !macRegex.test(device.split(" ").slice(2).join(" ")));
 
-            for (let i = 0; i < detectedDevices.length; i++) {
+            for (let i = 0; i < physicalDevices.length; i++) {
                 const device = detectedDevices[i].split(" ");
                 const deviceId = device[1];
-                const physicalDevice = !macRegex.test(device.slice(2).join(" "));
 
-                if (physicalDevice) {
-                    $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
-                        const deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
+                $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
+                    const deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
 
-                        availableDevices.push({
-                            id: deviceId,
-                            name: device.slice(2).join(" "),
-                            connected: searchDeviceInfo('Connected', deviceInfo),
-                            paired: searchDeviceInfo('Paired', deviceInfo),
-                            trusted: searchDeviceInfo('Trusted', deviceInfo)
-                        });
-
-                        if (i == detectedDevices.length) {
-                            renderAvailableDevices(availableDevices);
-
-                            setTimeout(() => {
-                                detectDevices();
-                            }, pollTime);
-                        }
+                    availableDevices.push({
+                        id: deviceId,
+                        name: device.slice(2).join(" "),
+                        connected: searchDeviceInfo('Connected', deviceInfo),
+                        paired: searchDeviceInfo('Paired', deviceInfo),
+                        trusted: searchDeviceInfo('Trusted', deviceInfo)
                     });
-                }
+
+                    if (i == physicalDevices.length) {
+                        renderAvailableDevices(availableDevices);
+
+                        setTimeout(() => {
+                            detectDevices();
+                        }, pollTime);
+                    }
+                });
             }
         });
     }
