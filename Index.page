@@ -170,7 +170,7 @@ $btmName = 'UnraidBluetoothManager';
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
                 let hasName = macRegex.test(device.slice(2).join(" "));
 
-                if (!deviceName) {
+                if (!hasName) {
                     if (!deviceExists) {
                         let deviceInfoRequest = {
                             id: deviceId,
