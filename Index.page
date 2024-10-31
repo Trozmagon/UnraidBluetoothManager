@@ -211,7 +211,7 @@ $btmName = 'UnraidBluetoothManager';
 
             availableDevices.forEach((availableDeviceId) => {
                 if (!renderedDevices.includes(availableDeviceId)) {
-                    let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
+                    let listItem = $(`#available-devices li [input="${availableDeviceId}"]`).parent();
             
                     availableDeviceList.remove(listItem)
                 }
