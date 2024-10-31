@@ -23,7 +23,7 @@ $btmName = 'UnraidBluetoothManager';
 
             .btm-container .btm-row .btm-column {
                 flex: 1;
-                border: 1px solid rgb(232, 232, 232);
+                border: 1px solid rgba(0, 0, 0, 0.1);
                 padding: 10px;
                 margin: 0px 5px;
             }
@@ -44,13 +44,13 @@ $btmName = 'UnraidBluetoothManager';
             .btm-container ul li {
                 display: flex;
                 flex-direction: column;
-                border: 1px solid rgb(232, 232, 232);
+                border: 1px solid rgba(0, 0, 0, 0.1);
                 border-top: 0px;
                 border-bottom: 0px;
             }
 
                 .btm-container ul li:first-of-type {
-                    border-top: 1px solid rgb(232, 232, 232);
+                    border-top: 1px solid rgba(0, 0, 0, 0.1);
                 }
 
     button.accordion-button {
@@ -58,7 +58,7 @@ $btmName = 'UnraidBluetoothManager';
         font-size: 1.2rem;
         color: rgba(28, 27, 27, 1.0);
         background: none;
-        border-bottom: 1px solid rgb(232, 232, 232);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 0px;
         margin: 0px;
         padding: 1rem 1.25rem;
@@ -67,8 +67,7 @@ $btmName = 'UnraidBluetoothManager';
     }
 
         button.accordion-button:hover {
-            background: rgb(232, 232, 232);
-            color: rgba(28, 27, 27, 0.6);
+            background: rgba(0, 0, 0, 0.1);
         }
 
         button.accordion-button > i {
@@ -76,9 +75,9 @@ $btmName = 'UnraidBluetoothManager';
             text-align: end;
         }
 
-    .accordion-details {
+    .accordion-options {
         display: none;
-        border-bottom: 1px solid rgb(232, 232, 232);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         padding: 1rem 1.25rem;
     }
 </style>
@@ -178,7 +177,8 @@ $btmName = 'UnraidBluetoothManager';
                         name: device.slice(2).join(" "),
                         connected: searchDeviceInfo('Connected', deviceInfo),
                         paired: searchDeviceInfo('Paired', deviceInfo),
-                        trusted: searchDeviceInfo('Trusted', deviceInfo)
+                        trusted: searchDeviceInfo('Trusted', deviceInfo),
+                        icon: getIconClass(deviceInfo[4])
                     });
 
                     ++deviceCount;
@@ -209,11 +209,12 @@ $btmName = 'UnraidBluetoothManager';
                 list.append(`<li class="accordion-item">
                         <input type="hidden" name="paired" value="${availableDevice.id}" />
                         <button class="accordion-button" type="button" onclick="toggleDetails(event)">
+                            <i class="fa ${availableDevice.icon}"></i>
                             ${availableDevice.name}
                             <i class="fa fa-chevron-down"></i>
                         </button>
-                        <div class="accordion-details">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        <div class="accordion-options">
+                            
                         </div>
                     </li>`);
 
@@ -255,6 +256,15 @@ $btmName = 'UnraidBluetoothManager';
             }
         }
         return -1;
+    }
+
+    function getIconClass(deviceInfoString) {
+        const iconName = deviceInfo[4].split(" ")[1];
+
+        switch (iconName) {
+            case "computer":
+                return "fa-computer";
+        }
     }
 
     function enableScan() {
