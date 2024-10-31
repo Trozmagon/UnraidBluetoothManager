@@ -43,38 +43,38 @@ $btmName = 'UnraidBluetoothManager';
 
             .btm-container ul li {
                 display: flex;
-                justify-content: start;
-                align-items: center;
-                cursor: pointer;
-                padding: 6px 12px;
+                flex-direction: column;
+                border: 1px solid #ccc;
+                border-bottom: 0px;
             }
 
-                .btm-container ul li input, .btm-container ul li .name {
-                    margin: 3px 3px 0px 5px;
-                }
+    button.accordion-button {
+        text-align: left;
+        font-size: 1.2rem;
+        color: #000;
+        background: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin: 0px;
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+    }
+        button.accordion-button:hover {
+            background: #ccc;
+            color: #000;
+        }
 
-                .btm-container ul li input {
-                }
+        button.accordion-button > i {
+            flex: 1;
+            text-align: end;
+        }
 
-                .btm-container ul li .name {
-                    flex: 1;
-                }
-
-                .btm-container ul li .status {
-                    width: 11px;
-                    height: 11px;
-                    border-radius: 50%;
-                    margin: 3px 3px 0px 5px;
-                    padding: 0px;
-                }
-
-                .btm-container ul li.connected .status {
-                    background-color: green;
-                }
-
-                .btm-container ul li.disconnected .status {
-                    background-color: red;
-                }
+    .accordion-details {
+        display: none;
+        border-bottom: 1px solid #ccc;
+        padding: 1rem 1.25rem;
+    }
 </style>
 
 <div class="btm-container">
@@ -200,28 +200,23 @@ $btmName = 'UnraidBluetoothManager';
             if (!rendered) {
                 const list = $('#available-devices');
 
-                list.append(`<li>
-                    <input type="radio" name="paired" value="${availableDevice.id}" />
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                ${availableDevice.name}
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#available-devices">
-                            <div class="accordion-body">
-                                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
+                list.append(`<li class="accordion-item">
+                        <input type="hidden" name="paired" value="${availableDevice.id}" />
+                        <button class="accordion-button" type="button" onclick="toggleDetails(event)">
+                            ${availableDevice.name}
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-details">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                         </div>
-                    </div>
-                </li>`);
+                    </li>`);
 
                 //if (availableDevice.paired) {
-                    
+
 
                 //    //<li class="${availableDevice.connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
                 //    //    <span class="status"></span>
-                        
+
                 //    //    <span class="name">${availableDevice.name} (${availableDevice.id})</span>
                 //    //</li>
                 //}
@@ -287,6 +282,21 @@ $btmName = 'UnraidBluetoothManager';
             radio
                 .prop('checked', true)
                 .addClass('checked');
+        }
+    }
+
+    function toggleDetails(event) {
+        const button = $(event.currentTarget);
+        const chevron = button.find('i');
+        const details = button.next();
+
+        if (details.hasClass('show')) {
+            details.slideUp();
+            chevron.addClass('fa-chevron-down').removeClass('fa-chevron-up');
+        }
+        else {
+            details.slideDown();
+            chevron.addClass('fa-chevron-up').removeClass('fa-chevron-down');
         }
     }
 
