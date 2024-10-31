@@ -70,7 +70,12 @@ $btmName = 'UnraidBluetoothManager';
             background: rgba(0, 0, 0, 0.1);
         }
 
-        button.accordion-button > i {
+        button.accordion-button > i:first-of-type {
+            font-size: 2rem;
+            margin-right: 12px;
+        }
+
+        button.accordion-button > i:last-of-type {
             flex: 1;
             text-align: end;
         }
@@ -267,7 +272,7 @@ $btmName = 'UnraidBluetoothManager';
                 className = "fab fa-bluetooth";
                 break;
             case "computer":
-                className = "fa fa-computer";
+                className = "fa fa-desktop";
                 break;
             case "audio-card":
                 className = "fab fa-bluetooth"
@@ -313,7 +318,7 @@ $btmName = 'UnraidBluetoothManager';
 
     function toggleDetails(event) {
         const button = $(event.currentTarget);
-        const chevron = button.find('i');
+        const chevron = button.find('i:last-of-type');
         const details = button.next();
 
         if (details.hasClass('show')) {
