@@ -114,6 +114,7 @@ $btmName = 'UnraidBluetoothManager';
 
 <script>
     let functions = '/plugins/<?= $btmName ?>/Functions.php'
+    let macRegex = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
 
     function connect() {
         let deviceId = $('#connect-id').val();
@@ -164,10 +165,11 @@ $btmName = 'UnraidBluetoothManager';
 
             detectedDevices.forEach((detectedDevice) => {
                 let device = detectedDevice.split(" ");
+                let deviceName = macRegex.test(device.slice(2).join(" "));
                 let deviceId = device[1];
                 let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
 
-                if (!deviceExists) {
+                if (!deviceExists && deviceName) {
                     let deviceInfoRequest = {
                         id: deviceId,
                         method: 'deviceinfo'
@@ -256,7 +258,7 @@ $btmName = 'UnraidBluetoothManager';
         let timestamp = new Date().toLocaleString().replace(',', '');
 
         $('#message-panel').append(`<li>
-            <span class="timestamp">${timestamp}</span>
+            <span class="timestamp">${timestamp}: </span>
             <span class="message">${message}</span>
         </li>`);
     }
