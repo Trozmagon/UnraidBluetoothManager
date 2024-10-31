@@ -115,6 +115,7 @@ $btmName = 'UnraidBluetoothManager';
 <script>
     let functions = '/plugins/<?= $btmName ?>/Functions.php'
     let macRegex = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
+    let pollTime = 1000;
 
     function connect() {
         let deviceId = $('#connect-id').val();
@@ -204,9 +205,6 @@ $btmName = 'UnraidBluetoothManager';
 
                         existingDeviceIds.push(deviceId);
                     }
-                    else {
-                        existingDeviceIds.filter((item) => { return item !== deviceId });
-                    }
                 }
             });
 
@@ -241,7 +239,7 @@ $btmName = 'UnraidBluetoothManager';
 
             setInterval(() => {
                 detectDevices();
-            }, 3000);
+            }, pollTime);
         });
     }
 
