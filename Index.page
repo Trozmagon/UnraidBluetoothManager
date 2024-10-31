@@ -258,13 +258,23 @@ $btmName = 'UnraidBluetoothManager';
         return -1;
     }
 
-    function getIconClass(deviceInfoString) {
-        const iconName = deviceInfo[4].split(" ")[1];
+    function getIconClass(deviceInfoIcon) {
+        const iconName = deviceInfoIcon.split(" ")[1];
+        let className = "";
 
         switch (iconName) {
+            default:
+                className = "fab fa-bluetooth";
+                break;
             case "computer":
-                return "fa-computer";
+                className = "fa fa-computer";
+                break;
+            case "audio-card":
+                className = "fab fa-bluetooth"
+                break;
         }
+
+        return className;
     }
 
     function enableScan() {
