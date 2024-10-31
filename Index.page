@@ -157,7 +157,8 @@ $btmName = 'UnraidBluetoothManager';
     function detectDevices() {
         let pairedDeviceList = $('#paired-devices');
         let availableDeviceList = $('#available-devices');
-        let availableDevices = JSON.parse(window.localStorage.getItem('bluetooth-devices'));
+        let availableDevices = [];
+        let renderedDevices = $('#available-devices li input').map((index, input) => { return input.value; }).get();
 
         let detectDevicesRequest = {
             method: 'devices'
@@ -202,20 +203,19 @@ $btmName = 'UnraidBluetoothManager';
                                 </li>`);
                             }
                         });
-
-                        availableDevices.push(deviceId);
                     }
+
+                    availableDevices.push(deviceId);
                 }
             });
 
-            window.localStorage.setItem('bluetooth-devices', JSON.stringify(availableDevices));
-            //startExistingDeviceIds.forEach((startExistingDeviceId) => {
-            //    if (!existingDeviceIds.includes(startExistingDeviceId)) {
-            //        let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
-            //
-            //        availableDeviceList.remove(listItem)
-            //    }
-            //});
+            availableDevices.forEach((availableDeviceId) => {
+                if (!renderedDevices.includes(availableDeviceId)) {
+                    let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
+            
+                    availableDeviceList.remove(listItem)
+                }
+            });
         });
     }
 
@@ -233,8 +233,6 @@ $btmName = 'UnraidBluetoothManager';
             method: 'startscan'
         };
 
-        window.localStorage.setItem('bluetooth-devices', JSON.stringify([]));
-
         $.get(functions, scanRequest, (response) => {
             logEvent(response);
 
@@ -247,8 +245,6 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function disableScan() {
-        window.localStorage.setItem('bluetooth-devices', JSON.stringify([]));
-
         $.get(functions, { method: 'stopscan' }, (response) => {
             logEvent(response);
         });
