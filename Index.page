@@ -45,7 +45,8 @@ $btmName = 'UnraidBluetoothManager';
                 display: flex;
                 justify-content: start;
                 align-items: center;
-                cursor: pointer
+                cursor: pointer;
+                padding: 6px 12px;
             }
 
                 .btm-container ul li input, .btm-container ul li .name {
@@ -95,21 +96,17 @@ $btmName = 'UnraidBluetoothManager';
     </div>
     <div class="btm-row">
         <div class="btm-column">
-            <span class="btm-title">Paired Devices</span>
-            <ul id="paired-devices"></ul>
-        </div>
-        <div class="btm-column">
             <span class="btm-title">Available Devices</span>
-            <ul id="available-devices"></ul>
+            <ul class="accordion" id="available-devices"></ul>
         </div>
     </div>
-    <div class="btm-row">
+    <!--<div class="btm-row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
     </div>
     <div class="btm-row">
         <input type="text" id="connect-id" />
         <button id="disconnect" type="button" onclick="connect();">Connect</button>
-    </div>
+    </div>-->
 </div>
 
 <script>
@@ -180,7 +177,7 @@ $btmName = 'UnraidBluetoothManager';
 
                     ++deviceCount;
 
-                    if (deviceCount == physicalDevices.length - 1) {
+                    if (deviceCount == physicalDevices.length) {
                         renderAvailableDevices(availableDevices);
 
                         setTimeout(() => {
@@ -195,7 +192,7 @@ $btmName = 'UnraidBluetoothManager';
     function renderAvailableDevices(availableDevices) {
         const availableDeviceIds = availableDevices.map((device) => { return device.id; });
         const renderedDeviceIds = getRenderedDeviceIds();
-        
+
         for (let i = 0; i < availableDevices.length; i++) {
             const availableDevice = availableDevices[i];
             const rendered = renderedDeviceIds.includes(availableDevice.id)
@@ -203,19 +200,37 @@ $btmName = 'UnraidBluetoothManager';
             if (!rendered) {
                 const list = $('#available-devices');
 
-                if (availableDevice.paired) {
-                    list.append(`<li class="${availableDevice.connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
-                        <span class="status"></span>
-                        <input type="radio" name="paired" value="${availableDevice.id}" />
-                        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
-                    </li>`);
-                }
-                else {
-                    list.append(`<li onclick="toggleDeviceSelection(event)">
-                        <input type="radio" name="paired" value="${availableDevice.id}" />
-                        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
-                    </li>`);
-                }
+                list.append(`<li>
+                    <input type="radio" name="paired" value="${availableDevice.id}" />
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                ${availableDevice.name}
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#available-devices">
+                            <div class="accordion-body">
+                                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                </li>`);
+
+                //if (availableDevice.paired) {
+                    
+
+                //    //<li class="${availableDevice.connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
+                //    //    <span class="status"></span>
+                        
+                //    //    <span class="name">${availableDevice.name} (${availableDevice.id})</span>
+                //    //</li>
+                //}
+                //else {
+                //    list.append(`<li onclick="toggleDeviceSelection(event)">
+                //        <input type="radio" name="paired" value="${availableDevice.id}" />
+                //        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
+                //    </li>`);
+                //}
             }
         }
 
