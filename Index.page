@@ -156,7 +156,8 @@ $btmName = 'UnraidBluetoothManager';
     function detectDevices() {
         let pairedDeviceList = $('#paired-devices');
         let availableDeviceList = $('#available-devices');
-        let existingDeviceIds = $('#available-devices li input').map((index, input) => { return input.value; }).get();
+        let startExistingDeviceIds = $('#available-devices li input').map((index, input) => { return input.value; }).get();
+        let existingDeviceIds = [];
         let detectDevicesRequest = {
             method: 'devices'
         };
@@ -199,13 +200,18 @@ $btmName = 'UnraidBluetoothManager';
                                     <span class="name">${deviceName} (${deviceId})</span>
                                 </li>`);
                             }
+
+                            existingDeviceIds.push(deviceId);
                         });
                     }
-                    else {
-                        let listItem = $(`#available-devices li [input="${deviceId}"]`).parent();
+                }
+            });
 
-                        availableDeviceList.remove(listItem)
-                    }
+            startExistingDeviceIds.forEach((startExistingDeviceId) => {
+                if (!existingDeviceIds.includes(startExistingDeviceId)) {
+                    let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
+
+                    availableDeviceList.remove(listItem)
                 }
             });
         });
