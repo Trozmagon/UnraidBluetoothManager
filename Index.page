@@ -23,7 +23,7 @@ $btmName = 'UnraidBluetoothManager';
 
             .btm-container .btm-row .btm-column {
                 flex: 1;
-                border: 1px solid #e3e3e3;
+                border: 1px solid rgb(232, 232, 232);
                 padding: 10px;
                 margin: 0px 5px;
             }
@@ -44,25 +44,31 @@ $btmName = 'UnraidBluetoothManager';
             .btm-container ul li {
                 display: flex;
                 flex-direction: column;
-                border: 1px solid #ccc;
+                border: 1px solid rgb(232, 232, 232);
+                border-top: 0px;
                 border-bottom: 0px;
             }
+
+                .btm-container ul li:first-of-type {
+                    border-top: 1px solid rgb(232, 232, 232);
+                }
 
     button.accordion-button {
         text-align: left;
         font-size: 1.2rem;
-        color: #000;
+        color: rgba(28, 27, 27, 1.0);
         background: none;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid rgb(232, 232, 232);
         border-radius: 0px;
         margin: 0px;
         padding: 1rem 1.25rem;
         display: flex;
         align-items: center;
     }
+
         button.accordion-button:hover {
-            background: #ccc;
-            color: #000;
+            background: rgb(232, 232, 232);
+            color: rgba(28, 27, 27, 0.6);
         }
 
         button.accordion-button > i {
@@ -72,7 +78,7 @@ $btmName = 'UnraidBluetoothManager';
 
     .accordion-details {
         display: none;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid rgb(232, 232, 232);
         padding: 1rem 1.25rem;
     }
 </style>
@@ -291,11 +297,17 @@ $btmName = 'UnraidBluetoothManager';
         const details = button.next();
 
         if (details.hasClass('show')) {
-            details.slideUp();
-            chevron.addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            details
+                .slideUp()
+                .removeClass('show');
+            chevron
+                .addClass('fa-chevron-down')
+                .removeClass('fa-chevron-up');
         }
         else {
-            details.slideDown();
+            details
+                .slideDown()
+                .addClass('show');;
             chevron.addClass('fa-chevron-up').removeClass('fa-chevron-down');
         }
     }
