@@ -189,8 +189,14 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function renderAvailableDevices(availableDevices) {
-        const renderedDeviceIds = $('#available-devices li input').map((i, input) => { return input.value; }).get();
-        const availableDeviceIds = availableDevices.map((i, device) => { return device.id; }).get();
+        const renderedDeviceIds = $('#available-devices li input').map(
+            (i, input) => {
+                return input.value;
+            }).get();
+        const availableDeviceIds = availableDevices.map(
+            (i, device) => {
+                return device.id;
+            }).get();
         const unavailableDeviceIds = renderedDeviceIds.filter(id => !availableDeviceIds.includes(id));
 
         for (let i = 0; i < unavailableDeviceIds.length; i++) {
