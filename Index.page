@@ -189,8 +189,8 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function renderAvailableDevices(availableDevices) {
-        const renderedDeviceIds = $('#available-devices li input').get().map((input) => { return input.value; });
         const availableDeviceIds = availableDevices.map((device) => { return device.id; });
+        const renderedDeviceIds = getRenderedDeviceIds();
 
         for (let i = 0; i < availableDevices.length; i++) {
             const availableDevice = availableDevices[i];
@@ -215,13 +215,17 @@ $btmName = 'UnraidBluetoothManager';
             }
         }
 
-        const unavailableDeviceIds = renderedDeviceIds.filter(id => !availableDeviceIds.includes(id));
+        const unavailableDeviceIds = getRenderedDeviceIds().filter(id => !availableDeviceIds.includes(id));
 
         for (let i = 0; i < unavailableDeviceIds.length; i++) {
             const unavailableDeviceId = unavailableDeviceIds[i];
 
             $(`#available-devices input[value="${unavailableDeviceId}"]`).parent().remove();
         }
+    }
+
+    function getRenderedDeviceIds() {
+        return $('#available-devices li input').get().map((input) => { return input.value; });
     }
 
     function searchDeviceInfo(value, deviceInfo) {
