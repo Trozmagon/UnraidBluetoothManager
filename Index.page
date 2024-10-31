@@ -1,8 +1,8 @@
-Title="Bluetooth Manager"
+Title="Unraid Bluetooth Manager"
 ---
 <?php
 
-$btmName = 'bluetooth-manager';
+$btmName = 'UnraidBluetoothManager';
 
 ?>
 
