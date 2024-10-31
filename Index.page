@@ -119,10 +119,14 @@ $btmName = 'UnraidBluetoothManager';
         </div>
     </div>
     <div class="btm-row">
+        <div class="btm-column"></div>
         <div class="btm-column">
+            <span class="btm-title">Paired Devices</span>
+            <ul class="accordion" id="paired-devices"></ul>
             <span class="btm-title">Available Devices</span>
             <ul class="accordion" id="available-devices"></ul>
         </div>
+        <div class="btm-column"></div>
     </div>
     <!--<div class="btm-row">
         <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
@@ -286,13 +290,16 @@ $btmName = 'UnraidBluetoothManager';
 
         switch (iconName) {
             default:
-                className = "fab fa-bluetooth";
+                className = "fa fa-bluetooth";
                 break;
             case "computer":
                 className = "fa fa-desktop";
                 break;
             case "audio-card":
                 className = "fa fa-tv"
+                break;
+            case "phone":
+                className = "fa fa-mobile"
                 break;
         }
 
