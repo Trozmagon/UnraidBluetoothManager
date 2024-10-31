@@ -200,9 +200,12 @@ $btmName = 'UnraidBluetoothManager';
                                     <span class="name">${deviceName} (${deviceId})</span>
                                 </li>`);
                             }
-
-                            existingDeviceIds.push(deviceId);
                         });
+
+                        existingDeviceIds.push(deviceId);
+                    }
+                    else {
+                        existingDeviceIds.filter((item) => { return item !== deviceId });
                     }
                 }
             });
