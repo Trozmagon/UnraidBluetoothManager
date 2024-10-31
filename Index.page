@@ -162,7 +162,7 @@ $btmName = 'UnraidBluetoothManager';
             const physicalDevices = detectedDevices.filter(device => !macRegex.test(device.split(" ").slice(2).join(" ")));
 
             for (let i = 0; i < physicalDevices.length; i++) {
-                const device = detectedDevices[i].split(" ");
+                const device = physicalDevices[i].split(" ");
                 const deviceId = device[1];
 
                 $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
@@ -189,14 +189,8 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function renderAvailableDevices(availableDevices) {
-        const renderedDeviceIds = $('#available-devices li input').get().map(
-            (input) => {
-                return input.value;
-            });
-        const availableDeviceIds = availableDevices.map(
-            (device) => {
-                return device.id;
-            });
+        const renderedDeviceIds = $('#available-devices li input').get().map((input) => { return input.value; });
+        const availableDeviceIds = availableDevices.map((device) => { return device.id; });
         const unavailableDeviceIds = renderedDeviceIds.filter(id => !availableDeviceIds.includes(id));
 
         for (let i = 0; i < unavailableDeviceIds.length; i++) {
