@@ -157,8 +157,8 @@ $btmName = 'UnraidBluetoothManager';
     function detectDevices() {
         let pairedDeviceList = $('#paired-devices');
         let availableDeviceList = $('#available-devices');
-        let startExistingDeviceIds = $('#available-devices li input').map((index, input) => { return input.value; }).get();
-        let existingDeviceIds = [];
+        //let startExistingDeviceIds = $('#available-devices li input').map((index, input) => { return input.value; }).get();
+        //let existingDeviceIds = [];
         let detectDevicesRequest = {
             method: 'devices'
         };
@@ -166,14 +166,16 @@ $btmName = 'UnraidBluetoothManager';
         $.get(functions, detectDevicesRequest, (response) => {
             let detectedDevices = JSON.parse(response);
 
+            availableDeviceList.html('');
+
             detectedDevices.forEach((detectedDevice) => {
                 let device = detectedDevice.split(" ");
                 let deviceId = device[1];
-                let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
+                //let deviceExists = $(`input[value="${deviceId}"]`).length > 0;
                 let hasName = macRegex.test(device.slice(2).join(" "));
 
                 if (!hasName) {
-                    if (!deviceExists) {
+                    //if (!deviceExists) {
                         let deviceInfoRequest = {
                             id: deviceId,
                             method: 'deviceinfo'
@@ -203,18 +205,18 @@ $btmName = 'UnraidBluetoothManager';
                             }
                         });
 
-                        existingDeviceIds.push(deviceId);
-                    }
+                        //existingDeviceIds.push(deviceId);
+                    //}
                 }
             });
 
-            startExistingDeviceIds.forEach((startExistingDeviceId) => {
-                if (!existingDeviceIds.includes(startExistingDeviceId)) {
-                    let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
-
-                    availableDeviceList.remove(listItem)
-                }
-            });
+            //startExistingDeviceIds.forEach((startExistingDeviceId) => {
+            //    if (!existingDeviceIds.includes(startExistingDeviceId)) {
+            //        let listItem = $(`#available-devices li [input="${startExistingDeviceId}"]`).parent();
+            //
+            //        availableDeviceList.remove(listItem)
+            //    }
+            //});
         });
     }
 
