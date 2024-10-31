@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-	<!ENTITY name		"bluetooth-manager">
+	<!ENTITY name		"UnraidBluetoothManager">
 	<!ENTITY author		"Trozmagon">
 	<!ENTITY version	"2024.06.27">
 	<!ENTITY launch		"Settings/Index">
