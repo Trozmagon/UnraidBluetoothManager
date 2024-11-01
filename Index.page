@@ -23,22 +23,26 @@ $btmName = 'UnraidBluetoothManager';
 
             .btm-container .btm-row .btm-column {
                 flex: 1;
-                border: 1px solid rgba(0, 0, 0, 0.1);
                 padding: 10px;
                 margin: 0px 5px;
             }
 
+                .btm-container .btm-row .btm-column .btm-device-container {
+                    display: none;
+                    flex-direction: column;
+                }
+
             .btm-container .btm-row .btm-spacer {
                 flex: 0.5;
-                border:none;
+                border: none;
             }
 
-            .btm-container .btm-title {
-                font-weight: bold;
-                font-size: 1.2em;
-                display: block;
-                margin-bottom: 10px;
-            }
+        .btm-container .btm-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+        }
 
         .btm-container ul {
             list-style-type: none;
@@ -46,100 +50,140 @@ $btmName = 'UnraidBluetoothManager';
             margin: 0px;
         }
 
-            .btm-container ul li {
-                display: flex;
-                flex-direction: column;
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                border-top: 0px;
-                border-bottom: 0px;
-            }
 
-                .btm-container ul li:first-of-type {
-                    border-top: 1px solid rgba(0, 0, 0, 0.1);
-                }
 
-    button.accordion-button {
+
+
+    li.device-container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 0px;
+        border-bottom: 0px;
+    }
+
+        li.device-container:first-of-type {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+    .device {
         text-align: left;
-        font-size: 1.2rem;
-        color: rgba(28, 27, 27, 1.0);
-        background: none;
+        font-size: 1.3rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 0px;
-        margin: 0px;
         padding: 1rem 1.25rem;
         display: flex;
         align-items: center;
+        cursor: default;
+        font-weight: bold;
     }
 
-        button.accordion-button:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: rgba(28, 27, 27, 1.0);
+    .device-icon {
+        width: 32px;
+        text-align: center;
+    }
+
+        .device-icon > i:first-of-type {
+            font-size: 26px;
         }
 
-        button.accordion-button > i:first-of-type {
-            font-size: 2rem;
-            margin-right: 12px;
-        }
-
-        button.accordion-button > i:last-of-type {
-            flex: 1;
-            text-align: end;
-        }
-
-    .accordion-options {
-        display: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding: 1rem 1.25rem;
+    .device-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0px 12px;
+        flex: 1;
     }
 
-    span.device-row {
-        display:flex;
-        flex-direction:column;
+    .device-name {
     }
 
-    span .device-name {
-    }
-
-    span.device-mac {
+    .device-mac {
         font-size: 1rem;
         font-weight: normal;
+    }
+
+    .device-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .device-loader {
+        width: 30px;
+        height: 30px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btm-loader {
+        width: 22px;
+        height: 22px;
+        border: 3px solid rgba(28, 27, 27, 1.0);
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .device-actions {
+        display: none;
+        flex-direction: column;
+    }
+
+        .device-actions button {
+            margin: 0px;
+            justify-content: center;
+            zoom: 0.75;
+        }
+
+            .device-actions button.device-forget {
+                display: none;
+                margin-top: 6px;
+            }
+
+
+    .show {
+        display: flex !important;
     }
 </style>
 
 <div class="btm-container">
-    <!--<div class="btm-row">
-        <div class="btm-column">
-            <button type="button" onclick="enableScan();">Start Scan</button>
-        </div>
-        <div class="btm-column">
-            <button type="button" onclick="disableScan();">Stop Scan</button>
-        </div>
-        <div class="btm-column">
-            <button type="button" onclick="detectDevices();">Get Devices</button>
-        </div>
-    </div>-->
+    <div class="btm-spacer"></div>
     <div class="btm-row">
         <div class="btm-column">
             <ul id="message-panel"></ul>
         </div>
     </div>
     <div class="btm-row">
-        <div class="btm-spacer"></div>
         <div class="btm-column">
-            <span class="btm-title">Paired Devices</span>
-            <ul class="accordion" id="paired-devices"></ul>
-            <span class="btm-title">Available Devices</span>
-            <ul class="accordion" id="available-devices"></ul>
+            <div class="btm-device-container">
+                <span class="btm-title">Connected Devices</span>
+                <ul class="accordion" id="connected-devices"></ul>
+            </div>
+            <div class="btm-device-container">
+                <span class="btm-title">Paired Devices</span>
+                <ul class="accordion" id="paired-devices"></ul>
+            </div>
+            <div class="btm-device-container">
+                <span class="btm-title">Available Devices</span>
+                <ul class="accordion" id="available-devices"></ul>
+            </div>
         </div>
-        <div class="btm-spacer"></div>
+
     </div>
-    <!--<div class="btm-row">
-        <button id="disconnect" type="button" onclick="disconnect();" style="display:none;">Disconnect</button>
-    </div>
-    <div class="btm-row">
-        <input type="text" id="connect-id" />
-        <button id="disconnect" type="button" onclick="connect();">Connect</button>
-    </div>-->
+    <div class="btm-spacer"></div>
 </div>
 
 <script>
@@ -147,41 +191,39 @@ $btmName = 'UnraidBluetoothManager';
     let macRegex = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/;
     let pollTime = 1000;
 
-    function connect() {
-        let deviceId = $('#connect-id').val();
+    function performContextualAction(deviceId, action) {
         let data = {
             id: deviceId,
-            method: 'connect'
+            method: action
         };
 
-        $('div.spinner').show();
+        toggleDeviceLoader(deviceId, true);
+
 
         $.post(functions, data, (response) => {
+            //if (response != null) {
+            //    $(`input[value="${deviceId}"]`).parent().remove();
+            //}
 
             alert(`${response}`);
 
-            $('div.spinner').hide();
+            updateDeviceStateByAction(deviceId, action);
         });
     }
 
-    function disconnect() {
-        let selectedDeviceId = $('input[type="radio"][name="paired"]:checked').val();
-        let data = {
-            id: selectedDeviceId,
-            method: 'disconnect'
-        };
+    function toggleDeviceLoader(deviceId, show) {
+        let device = $(`li.device-container input[value="${deviceId}"]`).parent();
+        let deviceLoader = device.find('.device-loader');
+        let deviceActions = device.find('.device-actions');
 
-        $('div.spinner').show();
-
-        $.post(functions, data, (response) => {
-            if (response != null) {
-                $(`input[value="${response}"]`).parent().remove();
-            }
-
-            alert(`${response}`);
-
-            $('div.spinner').hide();
-        });
+        if (show) {
+            deviceActions.removeClass('show');
+            deviceLoader.addClass('show');
+        }
+        else {
+            deviceLoader.removeClass('show');
+            deviceActions.addClass('show');
+        }
     }
 
     function detectDevices() {
@@ -193,32 +235,39 @@ $btmName = 'UnraidBluetoothManager';
 
             let deviceCount = 0;
 
-            for (let i = 0; i < physicalDevices.length; i++) {
-                const device = physicalDevices[i].split(" ");
-                const deviceId = device[1];
+            if (physicalDevices.length === 0) {
+                setTimeout(() => {
+                    detectDevices();
+                }, pollTime);
+            }
+            else {
+                for (let i = 0; i < physicalDevices.length; i++) {
+                    const device = physicalDevices[i].split(" ");
+                    const deviceId = device[1];
 
-                $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
-                    const deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
+                    $.post(functions, { id: deviceId, method: 'deviceinfo' }, (response) => {
+                        const deviceInfo = JSON.parse(response.replaceAll("\\t", ""));
 
-                    availableDevices.push({
-                        id: deviceId,
-                        name: device.slice(2).join(" "),
-                        connected: searchDeviceInfo('Connected', deviceInfo),
-                        paired: searchDeviceInfo('Paired', deviceInfo),
-                        trusted: searchDeviceInfo('Trusted', deviceInfo),
-                        icon: getIconClass(deviceInfo[4])
+                        availableDevices.push({
+                            id: deviceId,
+                            name: device.slice(2).join(" "),
+                            connected: searchDeviceInfo('Connected', deviceInfo),
+                            paired: searchDeviceInfo('Paired', deviceInfo),
+                            trusted: searchDeviceInfo('Trusted', deviceInfo),
+                            icon: getIconClass(deviceInfo[4])
+                        });
+
+                        ++deviceCount;
+
+                        if (deviceCount == physicalDevices.length) {
+                            renderAvailableDevices(availableDevices);
+
+                            setTimeout(() => {
+                                detectDevices();
+                            }, pollTime);
+                        }
                     });
-
-                    ++deviceCount;
-
-                    if (deviceCount == physicalDevices.length) {
-                        renderAvailableDevices(availableDevices);
-
-                        setTimeout(() => {
-                            detectDevices();
-                        }, pollTime);
-                    }
-                });
+                }
             }
         });
     }
@@ -232,38 +281,31 @@ $btmName = 'UnraidBluetoothManager';
             const rendered = renderedDeviceIds.includes(availableDevice.id)
 
             if (!rendered) {
-                const list = $('#available-devices');
+                const list = availableDevice.connected ? $('#connected-devices') : (availableDevice.paired || availableDevice.trusted) ? $('#paired-devices') : $('#available-devices');
+                const action = getDeviceContextualAction(availableDevice.connected, availableDevice.paired, availableDevice.trusted);
+                const forget = (action == "Connect" || action == "Disconnect");
 
-                list.append(`<li class="accordion-item">
-                        <input type="hidden" name="paired" value="${availableDevice.id}" />
-                        <button class="accordion-button" type="button" onclick="toggleDetails(event)">
-                            <i class="${availableDevice.icon}"></i>
-                            <span class="device-row">
+                list.append(`<li class="device-container" data-connected="${availableDevice.connected}" data-paired="${availableDevice.paired}" data-trusted="${availableDevice.trusted}">
+                        <input type="hidden" value="${availableDevice.id}" />
+                        <div class="device">
+                            <span class="device-icon">
+                                <i class="${availableDevice.icon}"></i>
+                            </span>
+                            <span class="device-info">
                                 <span class="device-name">${availableDevice.name}</span>
                                 <span class="device-mac">${availableDevice.id}</span>
                             </span>
-                            <i class="fa fa-chevron-down"></i>
-                        </button>
-                        <div class="accordion-options">
-
+                            <span class="device-loader">
+                                <span class="btm-loader"></span>
+                            </span>
+                            <span class="device-actions show">
+                                <button type="button" class="device-action" onclick="performContextualAction('${availableDevice.id}', '${action}')">${capitaliseString(action)}</button>
+                                <button type="button" class="device-forget ${forget ? 'show' : ''}" onclick="performContextualAction('${availableDevice.id}', 'forget')">Forget</button>
+                            </span>
                         </div>
                     </li>`);
 
-                //if (availableDevice.paired) {
-
-
-                //    //<li class="${availableDevice.connected ? 'connected' : 'disconnected'}" onclick="toggleDeviceSelection(event)">
-                //    //    <span class="status"></span>
-
-                //    //    <span class="name">${availableDevice.name} (${availableDevice.id})</span>
-                //    //</li>
-                //}
-                //else {
-                //    list.append(`<li onclick="toggleDeviceSelection(event)">
-                //        <input type="radio" name="paired" value="${availableDevice.id}" />
-                //        <span class="name">${availableDevice.name} (${availableDevice.id})</span>
-                //    </li>`);
-                //}
+                list.parent().addClass('show');
             }
         }
 
@@ -271,13 +313,50 @@ $btmName = 'UnraidBluetoothManager';
 
         for (let i = 0; i < unavailableDeviceIds.length; i++) {
             const unavailableDeviceId = unavailableDeviceIds[i];
+            const item = $(`li.device-container input[value="${unavailableDeviceId}"]`);
+            const container = item.closest('.btm-device-container');
 
-            $(`#available-devices input[value="${unavailableDeviceId}"]`).parent().remove();
+            item.parent().remove();
+
+            if (container.find('li').length === 0) {
+                container.removeClass('show');
+            }
         }
     }
 
+    function getDeviceContextualAction(connected, paired, trusted) {
+        if (connected) {
+            return 'disconnect';
+        }
+        else {
+            if (paired || trusted) {
+                return 'connect';
+            }
+
+            return 'pair';
+        }
+    }
+
+    function updateDeviceStateByAction(deviceId, action) {
+        let device = $(`li.device-container input[value="${deviceId}"]`).parent();
+        let button = device.find('.device-action');
+        let connected = device.data('connected');
+        let paired = device.data('paired');
+        let trusted = device.data('trusted');
+
+        switch (action) {
+            case 'pair':
+                device.data('paired', true);
+                device.data('trusted', true);
+
+                break;
+        }
+
+        toggleDeviceLoader(deviceId, false);
+    }
+
     function getRenderedDeviceIds() {
-        return $('#available-devices li input').get().map((input) => { return input.value; });
+        return $('li.device-container input').get().map((input) => { return input.value; });
     }
 
     function searchDeviceInfo(value, deviceInfo) {
@@ -290,22 +369,21 @@ $btmName = 'UnraidBluetoothManager';
     }
 
     function getIconClass(deviceInfoIcon) {
-        const iconName = deviceInfoIcon.split(" ")[1];
-        let className = "";
+        let className = "fa fa-bluetooth";
 
-        switch (iconName) {
-            default:
-                className = "fa fa-bluetooth";
-                break;
-            case "computer":
-                className = "fa fa-desktop";
-                break;
-            case "audio-card":
-                className = "fa fa-tv"
-                break;
-            case "phone":
-                className = "fa fa-mobile"
-                break;
+        if (deviceInfoIcon.includes('Icon')) {
+            const iconName = deviceInfoIcon.split(" ")[1];
+            switch (iconName) {
+                case "computer":
+                    className = "fa fa-laptop";
+                    break;
+                case "phone":
+                    className = "fa fa-mobile"
+                    break;
+                case "input-gaming":
+                    className = "fa fa-gamepad"
+                    break;
+            }
         }
 
         return className;
@@ -325,45 +403,8 @@ $btmName = 'UnraidBluetoothManager';
         });
     }
 
-    function toggleDeviceSelection(event) {
-        let button = $(event.currentTarget);
-        let radio = button.find('input');
-
-        if (radio.hasClass('checked')) {
-            $('#disconnect').hide();
-
-            radio
-                .prop('checked', false)
-                .removeClass('checked');
-        }
-        else {
-            $('#disconnect').show();
-
-            radio
-                .prop('checked', true)
-                .addClass('checked');
-        }
-    }
-
-    function toggleDetails(event) {
-        const button = $(event.currentTarget);
-        const chevron = button.find('i:last-of-type');
-        const details = button.next();
-
-        if (details.hasClass('show')) {
-            details
-                .slideUp()
-                .removeClass('show');
-            chevron
-                .addClass('fa-chevron-down')
-                .removeClass('fa-chevron-up');
-        }
-        else {
-            details
-                .slideDown()
-                .addClass('show');;
-            chevron.addClass('fa-chevron-up').removeClass('fa-chevron-down');
-        }
+    function capitaliseString(string) {
+        return String(string).charAt(0).toUpperCase() + String(string).slice(1);
     }
 
     function logEvent(message) {

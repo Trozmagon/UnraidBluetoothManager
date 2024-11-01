@@ -1,11 +1,17 @@
 <?PHP
 if (isset($_POST['method'])) {
     switch ($_POST['method']) {
+        case 'pair':
+            pair($_POST['id']);
+            break;
         case 'connect':
             connect($_POST['id']);
             break;
         case 'disconnect':
             disconnect($_POST['id']);
+            break;
+        case 'forget':
+            forget($_POST['id']);
             break;
         case 'deviceinfo':
             getDeviceInfo($_POST['id']);
@@ -27,10 +33,17 @@ if (isset($_GET['method'])) {
     }
 }
 
-function connect($deviceId)
+function pair($deviceId)
 {
     exec("bluetoothctl pair $deviceId");
-    exec("bluetoothctl trust $deviceId");
+    exec("bluetoothctl trust $deviceId", $response);
+
+    echo json_encode($response);
+    exit;
+}
+
+function connect($deviceId)
+{
     exec("bluetoothctl connect $deviceId", $response);
 
     echo json_encode($response);
@@ -39,10 +52,18 @@ function connect($deviceId)
 
 function disconnect($deviceId)
 {
+    exec("bluetoothctl disconnect $deviceId", $response);
+
+    echo json_encode($response);
+    exit;
+}
+
+function forget($deviceId)
+{
     exec("bluetoothctl unpair $deviceId");
     exec("bluetoothctl untrust $deviceId");
     exec("bluetoothctl remove $deviceId", $response);
-    
+
     echo json_encode($response);
     exit;
 }
