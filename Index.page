@@ -50,9 +50,11 @@ $btmName = 'UnraidBluetoothManager';
             margin: 0px;
         }
 
-
-
-
+        #message-panel {
+            padding:12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            display: none;
+        }
 
     li.device-container {
         display: flex;
@@ -160,7 +162,9 @@ $btmName = 'UnraidBluetoothManager';
 </style>
 
 <div class="btm-container">
-    <div class="btm-spacer"></div>
+<div class="btm-row">
+<div class="btm-spacer"></div>
+    <div class="btm-column">
     <div class="btm-row">
         <div class="btm-column">
             <ul id="message-panel"></ul>
@@ -181,9 +185,10 @@ $btmName = 'UnraidBluetoothManager';
                 <ul class="accordion" id="available-devices"></ul>
             </div>
         </div>
-
+    </div>
     </div>
     <div class="btm-spacer"></div>
+    </div>
 </div>
 
 <script>
@@ -192,22 +197,21 @@ $btmName = 'UnraidBluetoothManager';
     let pollTime = 1000;
 
     function performContextualAction(deviceId, action) {
-        let data = {
-            id: deviceId,
-            method: action
-        };
-
         toggleDeviceLoader(deviceId, true);
 
+        $.post(functions, { id: deviceId, method: action }, (response) => {
+            logEvent(response);
+            
+            if(action === 'pair') {
+                $.post(functions, { id: deviceId, method: 'trust' }, (response) => {
+                    logEvent(response);
 
-        $.post(functions, data, (response) => {
-            //if (response != null) {
-            //    $(`input[value="${deviceId}"]`).parent().remove();
-            //}
-
-            alert(`${response}`);
-
-            updateDeviceStateByAction(deviceId, action);
+                    updateDeviceStateByAction(deviceId, action);
+                });
+            }
+            else {
+                updateDeviceStateByAction(deviceId, action);
+            }
         });
     }
 
@@ -283,7 +287,6 @@ $btmName = 'UnraidBluetoothManager';
             if (!rendered) {
                 const list = availableDevice.connected ? $('#connected-devices') : (availableDevice.paired || availableDevice.trusted) ? $('#paired-devices') : $('#available-devices');
                 const action = getDeviceContextualAction(availableDevice.connected, availableDevice.paired, availableDevice.trusted);
-                const forget = (action == "Connect" || action == "Disconnect");
 
                 list.append(`<li class="device-container" data-connected="${availableDevice.connected}" data-paired="${availableDevice.paired}" data-trusted="${availableDevice.trusted}">
                         <input type="hidden" value="${availableDevice.id}" />
@@ -299,8 +302,7 @@ $btmName = 'UnraidBluetoothManager';
                                 <span class="btm-loader"></span>
                             </span>
                             <span class="device-actions show">
-                                <button type="button" class="device-action" onclick="performContextualAction('${availableDevice.id}', '${action}')">${capitaliseString(action)}</button>
-                                <button type="button" class="device-forget ${forget ? 'show' : ''}" onclick="performContextualAction('${availableDevice.id}', 'forget')">Forget</button>
+                                ${getButtonTemplate(availableDevice.id, action)}
                             </span>
                         </div>
                     </li>`);
@@ -329,7 +331,7 @@ $btmName = 'UnraidBluetoothManager';
             return 'disconnect';
         }
         else {
-            if (paired || trusted) {
+            if (paired && trusted) {
                 return 'connect';
             }
 
@@ -337,20 +339,48 @@ $btmName = 'UnraidBluetoothManager';
         }
     }
 
-    function updateDeviceStateByAction(deviceId, action) {
+    function getButtonTemplate(deviceId, action) {
+        const forget = (action == "connect" || action == "disconnect");
+
+        return `<button type="button" class="device-action" onclick="performContextualAction('${deviceId}', '${action}')">${action}</button>
+            <button type="button" class="device-forget ${forget ? 'show' : ''}" onclick="performContextualAction('${deviceId}', 'forget')">Forget</button>`;
+    }
+
+    function updateDeviceStateByAction(deviceId, action, success) {
         let device = $(`li.device-container input[value="${deviceId}"]`).parent();
-        let button = device.find('.device-action');
-        let connected = device.data('connected');
-        let paired = device.data('paired');
-        let trusted = device.data('trusted');
+        let actions = device.find('.device-actions');
+        let connected = false;
+        let paired = false;
+        let trusted = false;
+
+        actions.html('')
 
         switch (action) {
-            case 'pair':
-                device.data('paired', true);
-                device.data('trusted', true);
+           case 'pair':
+                paired = success;
+                break;
+            case 'trust':
+                paired = true;
+                trusted = success;
+                break;
+            case 'connect':
+            case 'disconnect':
+                connected = success;
+                paired = true;
+                trusted = true;
 
                 break;
+            case 'forget':
+                break;
         }
+
+        device.data('connected', connected);
+        device.data('paired', paired);
+        device.data('trusted', trusted);
+
+        let newAction = getDeviceContextualAction(connected, paired, trusted);
+
+        actions.html(getButtonTemplate(deviceId, newAction));
 
         toggleDeviceLoader(deviceId, false);
     }
@@ -403,10 +433,6 @@ $btmName = 'UnraidBluetoothManager';
         });
     }
 
-    function capitaliseString(string) {
-        return String(string).charAt(0).toUpperCase() + String(string).slice(1);
-    }
-
     function logEvent(message) {
         let timestamp = new Date().toLocaleString().replace(',', '');
 
@@ -414,6 +440,10 @@ $btmName = 'UnraidBluetoothManager';
             <span class="timestamp">${timestamp}: </span>
             <span class="message">${message}</span>
         </li>`);
+
+        if($('#message-panel li').length > 0) {
+            $('#message-panel').addClass('show');
+        }
     }
 
     $(function () {

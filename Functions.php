@@ -4,6 +4,9 @@ if (isset($_POST['method'])) {
         case 'pair':
             pair($_POST['id']);
             break;
+        case 'trust':
+            pair($_POST['id']);
+            break;
         case 'connect':
             connect($_POST['id']);
             break;
@@ -35,12 +38,20 @@ if (isset($_GET['method'])) {
 
 function pair($deviceId)
 {
-    exec("bluetoothctl pair $deviceId");
+    exec("bluetoothctl pair $deviceId", $response);
+
+    echo json_encode($response);
+    exit;
+}
+
+function trust($deviceId)
+{
     exec("bluetoothctl trust $deviceId", $response);
 
     echo json_encode($response);
     exit;
 }
+
 
 function connect($deviceId)
 {
